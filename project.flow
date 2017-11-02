@@ -1,0 +1,30 @@
+{
+  project: {
+    
+    // These first two are required
+    name: 'snake rescue',
+    version: '0.0.1',
+    author: 'jupiterio',
+    
+    // This configures your app.
+    // The package is important, it's used 
+    // for save locations, initializing mobile project files etc
+    app: {
+      name: 'social',
+      package: 'com.jupiterio.social'
+    },
+    
+    // This configures the build process
+    build: {
+      dependencies: {
+        luxe: '*',
+        mint: '*'
+      }
+    },
+    
+    // Copies over all the assets to the output
+    files: {
+      assets: 'assets/'
+    }
+  }
+}
