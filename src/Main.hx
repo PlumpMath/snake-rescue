@@ -15,11 +15,19 @@ import mint.focus.Focus;
 
 import AutoCanvas;
 
+#if cpp
+import luxe.gifcapture.LuxeGifCapture;
+#end
+
 class Main extends luxe.Game {
     
     public static var canvas: mint.Canvas;
     public static var rendering: LuxeMintRender;
     public static var focus: Focus;
+    
+    #if cpp
+    var capture : LuxeGifCapture;
+    #end
     
     override function config(config:GameConfig) {
         config.window.title = "Snake Rescue";
@@ -81,8 +89,44 @@ class Main extends luxe.Game {
             scale: new Vector(2, 2),
             frames: 23
         });
+        
+        #if cpp
+        capture = new LuxeGifCapture({
+            width: Std.int(Luxe.screen.w/2),
+            height: Std.int(Luxe.screen.h/2),
+            fps: 50, 
+            max_time: 3,
+            quality: GifQuality.High,
+            repeat: GifRepeat.Infinite,
+            oncomplete: function(_bytes:haxe.io.Bytes) {
+                var path = "snake.gif";
+                sys.io.File.saveBytes(path, _bytes);
+            }
+        });
+        #end
     }
-
+    
+    override public function onkeydown(event:KeyEvent) {
+        #if cpp
+        switch(event.keycode) {
+            case Key.space:
+                if(capture.state == CaptureState.Paused) {
+                    capture.record();
+                    trace('recording: active');
+                } else if(capture.state == CaptureState.Recording) {
+                    capture.pause();
+                    trace('recording: paused');
+                }
+            case Key.key_r:
+                capture.reset();
+                trace('recording: reset');
+            case Key.key_3:
+                trace('recording: committed');
+                capture.commit();
+        }
+        #end
+    }
+    
     override function onkeyup(event:KeyEvent) {
         if(event.keycode == Key.escape) {
             Luxe.shutdown();
@@ -93,5 +137,9 @@ class Main extends luxe.Game {
         if(snake==null)return;
         snake.rotation_z += 40*delta;
     }
-
+    
+    override function onmousemove(event:MouseEvent) {
+        if(snake==null)return;
+        snake.pos = event.pos;
+    }
 }

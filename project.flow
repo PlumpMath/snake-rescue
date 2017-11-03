@@ -18,7 +18,10 @@
     build: {
       dependencies: {
         luxe: '*',
-        mint: '*'
+        mint: '*',
+        gif : '*',
+        gifcapture : '*',
+        luxe_gifcapture : '*'
       }
     },
     
