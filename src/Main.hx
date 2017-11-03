@@ -43,7 +43,9 @@ class Main extends luxe.Game {
         // load all the graphics! Remember to add new graphics here!
         var parcel = new Parcel({
             textures: [
-                {id: "assets/textures/Snake.png"}
+                {id: "assets/textures/Snake.png"},
+                {id: "assets/textures/Barrel.png"},
+                {id: "assets/textures/Crate.png"}
             ]
         });
         
@@ -60,6 +62,8 @@ class Main extends luxe.Game {
     }
     
     var snake : entities.Pseudo3DSprite;
+    var barrel : entities.Pseudo3DSprite;
+    var crate : entities.Pseudo3DSprite;
     
     function assets_loaded(_) { // we're ready to use all that stuff!
         // setup the mint canvas {
@@ -88,6 +92,30 @@ class Main extends luxe.Game {
             size: new Vector(23, 23),
             scale: new Vector(2, 2),
             frames: 23
+        });
+        
+        var image = Luxe.resources.texture("assets/textures/Barrel.png");
+        image.filter_min = image.filter_mag = FilterType.nearest;
+        
+        barrel = new entities.Pseudo3DSprite({
+            name: "Barrel",
+            texture: image,
+            pos: new Vector(100, 100),
+            size: new Vector(9, 9),
+            scale: new Vector(2, 2),
+            frames: 11
+        });
+        
+        var image = Luxe.resources.texture("assets/textures/Crate.png");
+        image.filter_min = image.filter_mag = FilterType.nearest;
+        
+        crate = new entities.Pseudo3DSprite({
+            name: "Crate",
+            texture: image,
+            pos: new Vector(200, 100),
+            size: new Vector(11, 11),
+            scale: new Vector(2, 2),
+            frames: 11
         });
         
         #if cpp
@@ -134,8 +162,10 @@ class Main extends luxe.Game {
     }
 
     override function update(delta:Float) {
-        if(snake==null)return;
+        if(crate==null)return;
         snake.rotation_z += 40*delta;
+        barrel.rotation_z += 40*delta;
+        crate.rotation_z += 40*delta;
     }
     
     override function onmousemove(event:MouseEvent) {
