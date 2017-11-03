@@ -2,7 +2,9 @@
 import luxe.GameConfig;
 import luxe.Input;
 
+import luxe.Vector;
 import luxe.Color;
+import phoenix.Texture;
 
 import luxe.Parcel;
 import luxe.ParcelProgress;
@@ -31,7 +33,11 @@ class Main extends luxe.Game {
     override function ready() {
         
         // load all the graphics! Remember to add new graphics here!
-        var parcel = new Parcel();
+        var parcel = new Parcel({
+            textures: [
+                {id: "assets/textures/Snake.png"}
+            ]
+        });
         
         // get a simple loading screen for all that stuff. Builtin will do
         new ParcelProgress({
@@ -44,6 +50,8 @@ class Main extends luxe.Game {
         // load it!
         parcel.load();
     }
+    
+    var snake : entities.Pseudo3DSprite;
     
     function assets_loaded(_) { // we're ready to use all that stuff!
         // setup the mint canvas {
@@ -62,6 +70,17 @@ class Main extends luxe.Game {
         focus = new Focus(canvas); // apparently this is necessary
         // } mint canvas setup'd
         
+        var image = Luxe.resources.texture("assets/textures/Snake.png");
+        image.filter_min = image.filter_mag = FilterType.nearest;
+        
+        snake = new entities.Pseudo3DSprite({
+            name: "Snake",
+            texture: image,
+            pos: new Vector(200, 200),
+            size: new Vector(23, 23),
+            scale: new Vector(2, 2),
+            frames: 23
+        });
     }
 
     override function onkeyup(event:KeyEvent) {
@@ -71,7 +90,8 @@ class Main extends luxe.Game {
     }
 
     override function update(delta:Float) {
-        
+        if(snake==null)return;
+        snake.rotation_z += 40*delta;
     }
 
 }
