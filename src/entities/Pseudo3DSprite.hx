@@ -30,6 +30,7 @@ class Pseudo3DSprite extends Entity {
         frames = options.frames;
         size = options.size;
         texture = options.texture;
+        rotation_z = 0;
         
         for (n in 0...frames) {
             var spr = new Sprite({
