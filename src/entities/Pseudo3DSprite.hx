@@ -34,10 +34,10 @@ class Pseudo3DSprite extends Entity {
         
         for (n in 0...frames) {
             var spr = new Sprite({
+                parent: this,
                 name: name + "." + n,
-                pos: new Vector(pos.x, pos.y-scale.y*n),
+                pos: new Vector(0, -n),
                 size: size,
-                scale: scale,
                 texture: texture
             });
             
@@ -48,12 +48,8 @@ class Pseudo3DSprite extends Entity {
     }
 
     override function update(dt:Float) {
-        var n = 0;
         for (spr in sprites) {
             spr.rotation_z = rotation_z;
-            spr.pos.x = pos.x;
-            spr.pos.y = pos.y-scale.y*n;
-            n++;
         }
     }
 
