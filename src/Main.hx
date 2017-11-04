@@ -2,9 +2,10 @@
 import luxe.GameConfig;
 import luxe.Input;
 
-import luxe.Vector;
 import luxe.Color;
-import phoenix.Texture;
+
+import luxe.States;
+import states.PlayState;
 
 import luxe.Parcel;
 import luxe.ParcelProgress;
@@ -24,6 +25,9 @@ class Main extends luxe.Game {
     public static var canvas: mint.Canvas;
     public static var rendering: LuxeMintRender;
     public static var focus: Focus;
+    
+    var stateMachine : States;
+    var playState : PlayState;
     
     #if cpp
     var capture : LuxeGifCapture;
@@ -45,7 +49,8 @@ class Main extends luxe.Game {
             textures: [
                 {id: "assets/textures/Snake.png"},
                 {id: "assets/textures/Barrel.png"},
-                {id: "assets/textures/Crate.png"}
+                {id: "assets/textures/Crate.png"},
+                {id: "assets/textures/Background.png"}
             ]
         });
         
@@ -61,11 +66,9 @@ class Main extends luxe.Game {
         parcel.load();
     }
     
-    var snake : entities.Pseudo3DSprite;
-    var barrel : entities.Pseudo3DSprite;
-    var crate : entities.Pseudo3DSprite;
-    
     function assets_loaded(_) { // we're ready to use all that stuff!
+        Luxe.camera.size = new luxe.Vector(256, 256);
+        
         // setup the mint canvas {
         rendering = new LuxeMintRender();
         
@@ -73,7 +76,7 @@ class Main extends luxe.Game {
             name:"canvas",
             rendering: rendering,
             options: { color:new Color(1,1,1,0.0) },
-            scale: 2,
+            scale: 1,
             x: 0, y:0, w: Luxe.screen.w/2, h: Luxe.screen.h/2
         });
         autocanvas.auto_listen();
@@ -82,41 +85,11 @@ class Main extends luxe.Game {
         focus = new Focus(canvas); // apparently this is necessary
         // } mint canvas setup'd
         
-        var image = Luxe.resources.texture("assets/textures/Snake.png");
-        image.filter_min = image.filter_mag = FilterType.nearest;
+        stateMachine = new States({ name: "stateMachine" });
+        playState = new PlayState({ name: "playState" });
         
-        snake = new entities.Pseudo3DSprite({
-            name: "Snake",
-            texture: image,
-            pos: new Vector(200, 200),
-            size: new Vector(23, 23),
-            scale: new Vector(2, 2),
-            frames: 23
-        });
-        
-        var image = Luxe.resources.texture("assets/textures/Barrel.png");
-        image.filter_min = image.filter_mag = FilterType.nearest;
-        
-        barrel = new entities.Pseudo3DSprite({
-            name: "Barrel",
-            texture: image,
-            pos: new Vector(100, 100),
-            size: new Vector(9, 9),
-            scale: new Vector(2, 2),
-            frames: 11
-        });
-        
-        var image = Luxe.resources.texture("assets/textures/Crate.png");
-        image.filter_min = image.filter_mag = FilterType.nearest;
-        
-        crate = new entities.Pseudo3DSprite({
-            name: "Crate",
-            texture: image,
-            pos: new Vector(200, 100),
-            size: new Vector(11, 11),
-            scale: new Vector(2, 2),
-            frames: 11
-        });
+        stateMachine.add(playState);
+        stateMachine.set("playState");
         
         #if cpp
         capture = new LuxeGifCapture({
@@ -162,14 +135,6 @@ class Main extends luxe.Game {
     }
 
     override function update(delta:Float) {
-        if(crate==null)return;
-        snake.rotation_z += 40*delta;
-        barrel.rotation_z += 40*delta;
-        crate.rotation_z += 40*delta;
-    }
-    
-    override function onmousemove(event:MouseEvent) {
-        if(snake==null)return;
-        snake.pos = event.pos;
+        
     }
 }
