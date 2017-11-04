@@ -30,7 +30,7 @@ class PlayState extends State {
         
         snake = new entities.Snake({
             name: "Snake",
-            pos: new Vector(100, 100)
+            pos: new Vector(128, 128)
         });
         
         barrel = new entities.Barrel({
