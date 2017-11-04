@@ -1,6 +1,6 @@
 package entities;
 
-using utils.RadiansDegrees;
+using utils.ForceAngle;
 
 import entities.Pseudo3DSprite;
 
@@ -37,7 +37,8 @@ class Snake extends Pseudo3DSprite {
             else if (direction.left) 90 // left
             else if (direction.up) 180 // up
             else if (direction.right) 270 // down
-            else Math.atan((pos.y-256)/(pos.x-256)).toDegrees() + (if (pos.x-256 >= 0) 90 else -90); // if nothing is pressed, look at center of map
+            else pos.clone().subtractScalar(256).getAngle() - 90; // if nothing is pressed, look at center of map
+                    // clone because subtractScalar and friends are not functional
         // opposite directions (ex. down && up) are handled by the onkeydown event
         
         if (direction.down) {
