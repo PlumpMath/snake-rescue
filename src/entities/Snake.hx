@@ -16,8 +16,8 @@ class Snake extends Pseudo3DSprite {
     var direction = {down:false, left:false, up:false, right:false};
     
     override public function new(options : OptionalPseudo3DOptions){
-        options.frames = 23;
-        options.size = new Vector(23, 23);
+        options.frames = 19;
+        options.size = new Vector(21, 9);
         
         var image = Luxe.resources.texture("assets/textures/Snake.png");
         image.filter_min = image.filter_mag = FilterType.nearest;
@@ -29,18 +29,23 @@ class Snake extends Pseudo3DSprite {
     override function update(dt:Float){
         // veryInefficient && iDontCare
         target_rot =
-            if (direction.down && direction.left) 45 // down left
-            else if (direction.down && direction.right) 315 // down right
-            else if (direction.up && direction.left) 135 // up left
-            else if (direction.up && direction.right) 225 // up right
-            else if (direction.down) 0 // down
-            else if (direction.left) 90 // left
-            else if (direction.up) 180 // up
-            else if (direction.right) 270 // down
-            else pos.clone().subtractScalar(256).getAngle() - 90; // if nothing is pressed, look at center of map
+            if (direction.right && direction.down) 45 // down left
+            else if (direction.right && direction.up) 315 // down right
+            else if (direction.left && direction.down) 135 // up left
+            else if (direction.left && direction.up) 225 // up right
+            else if (direction.right) 0 // down
+            else if (direction.down) 90 // left
+            else if (direction.left) 180 // up
+            else if (direction.up) 270 // down
+            else pos.clone().subtractScalar(256).getAngle(); // if nothing is pressed, look at center of map
                     // clone because subtractScalar and friends are not functional
         // opposite directions (ex. down && up) are handled by the onkeydown event
         
+        
+        if (direction.right) {
+            pos.x += SNAKE_SPEED*dt;
+            Luxe.camera.pos.x += SNAKE_SPEED*dt;
+        }
         if (direction.down) {
             pos.y += SNAKE_SPEED*dt;
             Luxe.camera.pos.y += SNAKE_SPEED*dt;
@@ -52,10 +57,6 @@ class Snake extends Pseudo3DSprite {
         if (direction.up) {
             pos.y -= SNAKE_SPEED*dt;
             Luxe.camera.pos.y -= SNAKE_SPEED*dt;
-        }
-        if (direction.right) {
-            pos.x += SNAKE_SPEED*dt;
-            Luxe.camera.pos.x += SNAKE_SPEED*dt;
         }
         
         if  (rot != target_rot) {
@@ -74,6 +75,11 @@ class Snake extends Pseudo3DSprite {
     
     override function onkeydown(event : KeyEvent) {
         switch (event.keycode) {
+            case Key.right:
+                if (direction.left)
+                    direction.left = direction.right = false;
+                else
+                    direction.right = true;
             case Key.down:
                 if (direction.up) // for each case, if the opposite direction is true, turn both false
                     direction.up = direction.down = false;
@@ -89,24 +95,19 @@ class Snake extends Pseudo3DSprite {
                     direction.down = direction.up = false;
                 else
                     direction.up = true;
-            case Key.right:
-                if (direction.left)
-                    direction.left = direction.right = false;
-                else
-                    direction.right = true;
         }
     }
     
     override function onkeyup(event : KeyEvent) {
         switch (event.keycode) {
+            case Key.right:
+                direction.right = false;
             case Key.down:
                 direction.down = false;
             case Key.left:
                 direction.left = false;
             case Key.up:
                 direction.up = false;
-            case Key.right:
-                direction.right = false;
         }
     }
 
