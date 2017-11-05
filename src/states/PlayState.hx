@@ -10,9 +10,9 @@ import phoenix.Texture;
 
 class PlayState extends State {
     
-    var snake : entities.Pseudo3DSprite;
-    var barrel : entities.Pseudo3DSprite;
-    var head : entities.Pseudo3DSprite;
+    var snake : entities.Snake;
+    var altar : entities.Altar;
+    var head : entities.Head;
     var background : luxe.Sprite;
     
     override public function new(options : StateOptions){
@@ -25,7 +25,8 @@ class PlayState extends State {
             pos: new Vector(0, 0),
             size: new Vector(512, 512),
             texture: image,
-            centered: false
+            centered: false,
+            depth: -1
         });
         
         snake = new entities.Snake({
@@ -33,8 +34,8 @@ class PlayState extends State {
             pos: new Vector(128, 128)
         });
         
-        barrel = new entities.Barrel({
-            name: "Barrel",
+        altar = new entities.Altar({
+            name: "Altar",
             pos: new Vector(50, 50)
         });
         
@@ -45,7 +46,7 @@ class PlayState extends State {
     }
     
     override function update(delta:Float) {
-        barrel.rot += 40*delta;
+        altar.rot += 40*delta;
         head.rot += 40*delta;
     }
 

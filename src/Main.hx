@@ -51,6 +51,7 @@ class Main extends luxe.Game {
                 {id: "assets/textures/Barrel.png"},
                 {id: "assets/textures/Crate.png"},
                 {id: "assets/textures/Head.png"},
+                {id: "assets/textures/Altar.png"},
                 {id: "assets/textures/Background.png"}
             ]
         });

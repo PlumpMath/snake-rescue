@@ -6,13 +6,13 @@ import phoenix.Texture;
 
 import luxe.Vector;
 
-class Head extends Pseudo3DSprite {
+class Altar extends Pseudo3DSprite {
 
     override public function new(options : OptionalPseudo3DOptions){
-        options.frames = 39;
+        options.frames = 14;
         options.size = new Vector(41, 41);
         
-        var image = Luxe.resources.texture("assets/textures/Head.png");
+        var image = Luxe.resources.texture("assets/textures/Altar.png");
         image.filter_min = image.filter_mag = FilterType.nearest;
         options.texture = image;
         
