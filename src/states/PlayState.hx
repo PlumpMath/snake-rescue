@@ -12,7 +12,7 @@ class PlayState extends State {
     
     var snake : entities.Pseudo3DSprite;
     var barrel : entities.Pseudo3DSprite;
-    var crate : entities.Pseudo3DSprite;
+    var head : entities.Pseudo3DSprite;
     var background : luxe.Sprite;
     
     override public function new(options : StateOptions){
@@ -38,15 +38,15 @@ class PlayState extends State {
             pos: new Vector(50, 50)
         });
         
-        crate = new entities.Crate({
-            name: "Crate",
+        head = new entities.Head({
+            name: "Head",
             pos: new Vector(100, 50)
         });
     }
     
     override function update(delta:Float) {
         barrel.rot += 40*delta;
-        crate.rot += 40*delta;
+        head.rot += 40*delta;
     }
 
 }
