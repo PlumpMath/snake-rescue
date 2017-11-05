@@ -1,6 +1,6 @@
 # snake rescue
 
-Supposedly inspired by Mayan/Aztec/other precolumbine civilizations, a game about a snake trying to rescue its friends from the pits of some strange ruins, where they have to fight against some strange deities.
+Supposedly inspired by Mayan/Aztec/other precolumbine civilizations' mythology, a game about a snake trying to rescue its friends from the pits of some strange ruins, where they have to fight against some strange deities.
 
 As of now, you can only move around. You will not have friends (_yet_)
 
