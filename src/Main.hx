@@ -71,6 +71,7 @@ class Main extends luxe.Game {
     
     function assets_loaded(_) { // we're ready to use all that stuff!
         Luxe.camera.size = new luxe.Vector(256, 256);
+        Luxe.camera.bounds = new luxe.Rectangle(-128, -128, 896, 896);
         
         // setup the mint canvas {
         rendering = new LuxeMintRender();
