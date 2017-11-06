@@ -37,6 +37,7 @@ class Main extends luxe.Game {
         config.window.title = "Snake Rescue";
         config.window.width = 512;
         config.window.height = 512;
+        config.window.resizable = false;
         config.window.fullscreen = false;
         
         return config;
