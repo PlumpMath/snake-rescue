@@ -53,6 +53,7 @@ class Snake extends Pseudo3DSprite {
             pos.y -= SNAKE_SPEED*dt;
         }
         Luxe.camera.pos = pos.clone().subtractScalar(256);
+        Main.display_sprite.pos = Luxe.camera.pos.clone().addScalar(128);
         
         if  (rot != target_rot) {
             var diff = target_rot-(rot % 360);

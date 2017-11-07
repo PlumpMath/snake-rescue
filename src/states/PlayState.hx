@@ -26,7 +26,7 @@ class PlayState extends State {
             size: new Vector(512, 512),
             texture: image,
             centered: false,
-            depth: -1
+            batcher: Main.backgroundBatcher
         });
         
         snake = new entities.Snake({
@@ -36,7 +36,12 @@ class PlayState extends State {
         
         altar = new entities.Altar({
             name: "Altar",
-            pos: new Vector(50, 50)
+            pos: new Vector(20, 20)
+        });
+        
+        var altar2 = new entities.Altar({
+            name: "Altar2",
+            pos: new Vector(61, 20)
         });
         
         head = new entities.Head({

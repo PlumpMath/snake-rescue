@@ -1,8 +1,11 @@
+package ;
 
 import luxe.GameConfig;
 import luxe.Input;
+import phoenix.RenderTexture;
 
 import luxe.Color;
+import luxe.Vector;
 
 import luxe.States;
 import states.PlayState;
@@ -26,6 +29,10 @@ class Main extends luxe.Game {
     public static var rendering: LuxeMintRender;
     public static var focus: Focus;
     
+    public static var backgroundBatcher : phoenix.Batcher;
+    public static var foregroundBatcher : phoenix.Batcher;
+    public static var foregroundTarget : phoenix.RenderTexture;
+    public static var display_sprite : luxe.Sprite;
     var stateMachine : States;
     var playState : PlayState;
     
@@ -44,7 +51,6 @@ class Main extends luxe.Game {
     }
 
     override function ready() {
-        
         // load all the graphics! Remember to add new graphics here!
         var parcel = new Parcel({
             textures: [
@@ -54,6 +60,9 @@ class Main extends luxe.Game {
                 {id: "assets/textures/Head.png"},
                 {id: "assets/textures/Altar.png"},
                 {id: "assets/textures/Background.png"}
+            ],
+            shaders: [
+                {id: "outline", vert_id: "assets/shaders/default.vert", frag_id: "assets/shaders/outline.frag"}
             ]
         });
         
@@ -70,7 +79,47 @@ class Main extends luxe.Game {
     }
     
     function assets_loaded(_) { // we're ready to use all that stuff!
-        Luxe.camera.size = new luxe.Vector(256, 256);
+        backgroundBatcher = Luxe.renderer.create_batcher({
+            name: "backgroundBatcher",
+            camera: Luxe.camera.view,
+            layer: 1
+        });
+        
+        foregroundBatcher = Luxe.renderer.create_batcher({
+            name: "foregroundBatcher",
+            camera: Luxe.camera.view,
+            layer: 2
+        });
+        
+        var defBatcher = Luxe.renderer.batcher;
+        foregroundTarget = new phoenix.RenderTexture({
+            id: "foregroundTarget",
+            width: Std.int(defBatcher.view.viewport.w),
+            height: Std.int(defBatcher.view.viewport.h)
+        });
+        
+        var outlineShader = Luxe.resources.shader("outline");
+        outlineShader.set_vector2("pixelSize", new Vector(1/256, 1/256));
+        
+        display_sprite = new luxe.Sprite({
+            texture: foregroundTarget,
+            size: new Vector(256, 256),
+            pos: new Vector(0, 0),
+            centered: false,
+            batcher: foregroundBatcher,
+            shader: outlineShader
+        });
+        
+        defBatcher.on(prerender, function(_) {
+            Luxe.renderer.target = foregroundTarget;
+            Luxe.renderer.clear(new Color(1, 1, 1, 0));
+        });
+        
+        defBatcher.on(postrender, function(_) {
+            Luxe.renderer.target = null;
+        });
+        
+        Luxe.camera.size = new Vector(256, 256);
         Luxe.camera.bounds = new luxe.Rectangle(-128, -128, 896, 896);
         
         // setup the mint canvas {
