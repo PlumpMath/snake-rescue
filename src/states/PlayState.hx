@@ -23,7 +23,7 @@ class PlayState extends State {
         background = new luxe.Sprite({
             name: "background",
             pos: new Vector(0, 0),
-            size: new Vector(512, 512),
+            size: new Vector(640, 640),
             texture: image,
             centered: false,
             batcher: Main.backgroundBatcher
@@ -34,25 +34,24 @@ class PlayState extends State {
             pos: new Vector(128, 128)
         });
         
+        head = new entities.Head({
+            name: "Head",
+            pos: new Vector(84, 125)
+        });
+        
         altar = new entities.Altar({
             name: "Altar",
-            pos: new Vector(20, 20)
+            pos: new Vector(84, 84)
         });
         
         var altar2 = new entities.Altar({
             name: "Altar2",
-            pos: new Vector(61, 20)
-        });
-        
-        head = new entities.Head({
-            name: "Head",
-            pos: new Vector(100, 50)
+            pos: new Vector(125, 84)
         });
     }
     
     override function update(delta:Float) {
-        altar.rotation_z += 40*delta;
-        head.rotation_z += 40*delta;
+        
     }
 
 }

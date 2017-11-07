@@ -120,7 +120,7 @@ class Main extends luxe.Game {
         });
         
         Luxe.camera.size = new Vector(256, 256);
-        Luxe.camera.bounds = new luxe.Rectangle(-128, -128, 896, 896);
+        Luxe.camera.bounds = new luxe.Rectangle(-128, -128, 1024, 1024);
         
         // setup the mint canvas {
         rendering = new LuxeMintRender();

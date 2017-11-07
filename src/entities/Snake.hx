@@ -37,7 +37,7 @@ class Snake extends Pseudo3DSprite {
             else if (direction.down && !direction.up) 90 // left
             else if (direction.left && !direction.right) 180 // up
             else if (direction.up && !direction.down) 270 // down
-            else pos.clone().subtractScalar(256).getAngle(); // if nothing is pressed, look at center of map
+            else pos.clone().subtractScalar(320).getAngle(); // if nothing is pressed, look at center of map
                     // clone because subtractScalar and friends are not functional
         
         if (direction.right && !direction.left) {
