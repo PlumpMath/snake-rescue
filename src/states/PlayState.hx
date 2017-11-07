@@ -51,8 +51,8 @@ class PlayState extends State {
     }
     
     override function update(delta:Float) {
-        altar.rot += 40*delta;
-        head.rot += 40*delta;
+        altar.rotation_z += 40*delta;
+        head.rotation_z += 40*delta;
     }
 
 }

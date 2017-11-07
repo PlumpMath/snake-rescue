@@ -41,22 +41,22 @@ class Snake extends Pseudo3DSprite {
                     // clone because subtractScalar and friends are not functional
         
         if (direction.right && !direction.left) {
-            pos.x += SNAKE_SPEED*dt;
+            x += SNAKE_SPEED*dt;
         }
         if (direction.down && !direction.up) {
-            pos.y += SNAKE_SPEED*dt;
+            y += SNAKE_SPEED*dt;
         }
         if (direction.left && !direction.right) {
-            pos.x -= SNAKE_SPEED*dt;
+            x -= SNAKE_SPEED*dt;
         }
         if (direction.up && !direction.down) {
-            pos.y -= SNAKE_SPEED*dt;
+            y -= SNAKE_SPEED*dt;
         }
         Luxe.camera.pos = pos.clone().subtractScalar(256);
         Main.display_sprite.pos = Luxe.camera.pos.clone().addScalar(128);
         
-        if  (rot != target_rot) {
-            var diff = target_rot-(rot % 360);
+        if  (rotation_z != target_rot) {
+            var diff = target_rot-(rotation_z % 360);
             
             if (diff > 180) {
                 diff -= 360;
@@ -64,8 +64,8 @@ class Snake extends Pseudo3DSprite {
                 diff += 360;
             }
             
-            rot += diff/20;
-            rot = rot % 360;
+            rotation_z += diff/20;
+            rotation_z = rotation_z % 360;
         }
     }
     
