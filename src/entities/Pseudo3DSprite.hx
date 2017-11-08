@@ -5,6 +5,7 @@ import luxe.Entity;
 import luxe.options.EntityOptions;
 
 import luxe.Vector;
+import luxe.Color;
 import differ.Collision;
 import differ.shapes.*;
 
@@ -12,7 +13,9 @@ typedef Pseudo3DOptions = {
     > EntityOptions,
     
     frames: Int,
+    ?rotation_z: Float,
     size: Vector,
+    ?color: Color,
     texture: phoenix.Texture
 };
 
@@ -20,6 +23,7 @@ typedef OptionalPseudo3DOptions = {
     > Pseudo3DOptions,
     
     ?frames: Int,
+    ?rotation_z: Float,
     ?size: Vector,
     ?texture: phoenix.Texture
 };
@@ -33,6 +37,7 @@ class Pseudo3DSprite extends Entity {
     public var frames : Int;
     public var sprites : Array<Sprite>;
     public var size : Vector;
+    public var color: Color;
     public var texture : phoenix.Texture;
     
     public var collider : differ.shapes.Shape;
@@ -43,7 +48,9 @@ class Pseudo3DSprite extends Entity {
         super(options);
         
         frames = options.frames;
+        if (options.rotation_z != null) rotation_z = options.rotation_z;
         size = options.size;
+        if (options.color != null) color = options.color;
         texture = options.texture;
         x = pos.x;
         y = pos.y;
@@ -53,7 +60,9 @@ class Pseudo3DSprite extends Entity {
                 parent: this,
                 name: name + "." + n,
                 pos: new Vector(0, -n),
+                rotation_z: rotation_z,
                 size: size,
+                color: color,
                 texture: texture,
                 depth: pos.y+(n+1)/1000
             });
@@ -67,7 +76,6 @@ class Pseudo3DSprite extends Entity {
     }
     
     function set_rotation_z(val) {
-        
         for (spr in sprites) {
             spr.rotation_z = val;
         }
