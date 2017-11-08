@@ -36,7 +36,7 @@ class PlayState extends State {
         
         head = new entities.Head({
             name: "Head",
-            pos: new Vector(84, 125)
+            pos: new Vector(84, 124)
         });
         
         altar = new entities.Altar({
@@ -46,7 +46,7 @@ class PlayState extends State {
         
         var altar2 = new entities.Altar({
             name: "Altar2",
-            pos: new Vector(125, 84)
+            pos: new Vector(124, 84)
         });
     }
     
