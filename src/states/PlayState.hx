@@ -10,7 +10,6 @@ import phoenix.Texture;
 
 class PlayState extends State {
     
-    var snake : entities.Snake;
     var altar : entities.Altar;
     var head : entities.Head;
     var background : luxe.Sprite;
@@ -29,8 +28,8 @@ class PlayState extends State {
             batcher: Main.backgroundBatcher
         });
         
-        snake = new entities.Snake({
-            name: "Snake",
+        Main.player = new entities.Player({
+            name: "Player",
             pos: new Vector(128, 128)
         });
         

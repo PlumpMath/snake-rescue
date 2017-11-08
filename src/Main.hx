@@ -35,6 +35,7 @@ class Main extends luxe.Game {
     public static var display_sprite : luxe.Sprite;
     
     public static var sprites : Array<entities.Pseudo3DSprite>;
+    public static var player : entities.Player;
     var stateMachine : States;
     var playState : PlayState;
     
