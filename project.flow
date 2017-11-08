@@ -19,6 +19,7 @@
       dependencies: {
         luxe: '*',
         mint: '*',
+        differ: '*',
         gif : '*',
         gifcapture : '*',
         luxe_gifcapture : '*'
