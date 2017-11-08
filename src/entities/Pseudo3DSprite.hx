@@ -5,6 +5,8 @@ import luxe.Entity;
 import luxe.options.EntityOptions;
 
 import luxe.Vector;
+import differ.Collision;
+import differ.shapes.*;
 
 typedef Pseudo3DOptions = {
     > EntityOptions,
@@ -33,6 +35,8 @@ class Pseudo3DSprite extends Entity {
     public var size : Vector;
     public var texture : phoenix.Texture;
     
+    public var collider : differ.shapes.Shape;
+    
     override public function new(options : Pseudo3DOptions) {
         sprites = [];
         
@@ -58,17 +62,22 @@ class Pseudo3DSprite extends Entity {
             
             sprites.push(spr);
         }
+        
+        collider = Polygon.rectangle(pos.x, pos.y, size.x, size.y);
     }
     
     function set_rotation_z(val) {
+        
         for (spr in sprites) {
             spr.rotation_z = val;
         }
+        if (collider!=null) collider.rotation = val;
         return rotation_z = val;
     }
     
     function set_x(val) {
         pos.x = val;
+        if (collider!=null) collider.x = val;
         return x = val;
     }
     
@@ -79,6 +88,7 @@ class Pseudo3DSprite extends Entity {
             n++;
         }
         pos.y = val;
+        if (collider!=null) collider.y = val;
         return y = val;
     }
 

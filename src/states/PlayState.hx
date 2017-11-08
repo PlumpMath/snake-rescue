@@ -38,16 +38,19 @@ class PlayState extends State {
             name: "Head",
             pos: new Vector(84, 124)
         });
+        Main.sprites.push(head);
         
         altar = new entities.Altar({
             name: "Altar",
             pos: new Vector(84, 84)
         });
+        Main.sprites.push(altar);
         
         var altar2 = new entities.Altar({
             name: "Altar2",
             pos: new Vector(124, 84)
         });
+        Main.sprites.push(altar2);
     }
     
     override function update(delta:Float) {

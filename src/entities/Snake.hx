@@ -8,6 +8,7 @@ import luxe.Input;
 import phoenix.Texture;
 
 import luxe.Vector;
+import differ.Collision;
 
 class Snake extends Pseudo3DSprite {
     
@@ -67,6 +68,8 @@ class Snake extends Pseudo3DSprite {
             rotation_z += diff/20;
             rotation_z = rotation_z % 360;
         }
+        
+        collide();
     }
     
     override function onkeydown(event : KeyEvent) {
@@ -92,6 +95,16 @@ class Snake extends Pseudo3DSprite {
                 direction.left = false;
             case Key.up:
                 direction.up = false;
+        }
+    }
+    
+    function collide() {
+        for (spr in Main.sprites) {
+            var coll = Collision.shapeWithShape(collider, spr.collider);
+            if (coll != null) {
+                x += coll.separationX;
+                y += coll.separationY;
+            }
         }
     }
 

@@ -33,6 +33,8 @@ class Main extends luxe.Game {
     public static var foregroundBatcher : phoenix.Batcher;
     public static var foregroundTarget : phoenix.RenderTexture;
     public static var display_sprite : luxe.Sprite;
+    
+    public static var sprites : Array<entities.Pseudo3DSprite>;
     var stateMachine : States;
     var playState : PlayState;
     
@@ -51,6 +53,8 @@ class Main extends luxe.Game {
     }
 
     override function ready() {
+        sprites = [];
+        
         // load all the graphics! Remember to add new graphics here!
         var parcel = new Parcel({
             textures: [
