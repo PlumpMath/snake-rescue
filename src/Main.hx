@@ -2,10 +2,12 @@ package ;
 
 import luxe.GameConfig;
 import luxe.Input;
+import phoenix.Texture;
 import phoenix.RenderTexture;
 
 import luxe.Color;
 import luxe.Vector;
+import entities.Pseudo3D;
 
 import luxe.States;
 import states.PlayState;
@@ -34,10 +36,14 @@ class Main extends luxe.Game {
     public static var foregroundTarget : phoenix.RenderTexture;
     public static var display_sprite : luxe.Sprite;
     
-    public static var sprites : Array<entities.Pseudo3DSprite>;
+    public static var sprites : Array<entities.Pseudo3D>;
     public static var player : entities.Player;
     var stateMachine : States;
     var playState : PlayState;
+    
+    public static var createAltar;
+    public static var createHead;
+    public static var createSnake;
     
     #if cpp
     var capture : LuxeGifCapture;
@@ -54,6 +60,8 @@ class Main extends luxe.Game {
     }
 
     override function ready() {
+        phoenix.Texture.default_filter = FilterType.nearest;
+        
         sprites = [];
         
         // load all the graphics! Remember to add new graphics here!
@@ -84,6 +92,27 @@ class Main extends luxe.Game {
     }
     
     function assets_loaded(_) { // we're ready to use all that stuff!
+        // setup creators {
+        createAltar = Pseudo3D.newCreator({
+            frames: 14,
+            size: new Vector(40, 40),
+            texture: Luxe.resources.texture("assets/textures/Altar.png")
+        });
+        
+        createHead = Pseudo3D.newCreator({
+            frames: 39,
+            size: new Vector(40, 40),
+            texture: Luxe.resources.texture("assets/textures/Head.png")
+        });
+        
+        createSnake = Pseudo3D.newCreator({
+            frames: 19,
+            size: new Vector(22, 7),
+            texture: Luxe.resources.texture("assets/textures/Snake.png")
+        });
+        // } creators setup'd
+        
+        // setup batchers {
         backgroundBatcher = Luxe.renderer.create_batcher({
             name: "backgroundBatcher",
             camera: Luxe.camera.view,
@@ -123,6 +152,7 @@ class Main extends luxe.Game {
         defBatcher.on(postrender, function(_) {
             Luxe.renderer.target = null;
         });
+        // } batchers setup'd
         
         Luxe.camera.size = new Vector(256, 256);
         Luxe.camera.bounds = new luxe.Rectangle(-128, -128, 1024, 1024);

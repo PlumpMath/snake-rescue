@@ -2,7 +2,7 @@ package entities;
 
 using utils.ForceAngle;
 
-import entities.Pseudo3DSprite;
+import entities.Pseudo3D;
 
 import luxe.Input;
 import phoenix.Texture;
@@ -10,7 +10,7 @@ import phoenix.Texture;
 import luxe.Vector;
 import differ.Collision;
 
-class Player extends Snake {
+class Player extends Pseudo3D {
     
     public static var SNAKE_SPEED = 100;
     var target_rot : Float;

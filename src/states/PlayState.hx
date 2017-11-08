@@ -6,12 +6,13 @@ import luxe.options.StateOptions;
 import luxe.Input;
 
 import luxe.Vector;
+import entities.Pseudo3D;
 import phoenix.Texture;
 
 class PlayState extends State {
     
-    var altar : entities.Altar;
-    var head : entities.Head;
+    var altar : Pseudo3D;
+    var head : Pseudo3D;
     var background : luxe.Sprite;
     
     override public function new(options : StateOptions){
@@ -33,19 +34,19 @@ class PlayState extends State {
             pos: new Vector(128, 128)
         });
         
-        head = new entities.Head({
+        head = Main.createHead(cast {
             name: "Head",
             pos: new Vector(84, 124)
         });
         Main.sprites.push(head);
         
-        altar = new entities.Altar({
+        altar = Main.createAltar(cast {
             name: "Altar",
             pos: new Vector(84, 84)
         });
         Main.sprites.push(altar);
         
-        var altar2 = new entities.Altar({
+        var altar2 = Main.createAltar(cast {
             name: "Altar2",
             pos: new Vector(124, 84)
         });

@@ -28,7 +28,7 @@ typedef OptionalPseudo3DOptions = {
     ?texture: phoenix.Texture
 };
 
-class Pseudo3DSprite extends Entity {
+class Pseudo3D extends Entity {
     
     public var rotation_z(default, set): Float = 0;
     public var x(default, set): Float = 0;
@@ -98,6 +98,18 @@ class Pseudo3DSprite extends Entity {
         pos.y = val;
         if (collider!=null) collider.y = val;
         return y = val;
+    }
+    
+    public static function newCreator(defOptions : Pseudo3DOptions) {
+        var fields = Reflect.fields(defOptions);
+        return function(options : OptionalPseudo3DOptions){
+            for (field in fields) {
+                var defValue = Reflect.getProperty(defOptions, field);
+                Reflect.setProperty(options, field, defValue);
+            }
+            
+            return new Pseudo3D(options);
+        }
     }
 
 }
