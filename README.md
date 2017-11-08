@@ -14,6 +14,11 @@ Dependencies:
 
 Luxe's website has a nice setup guide to get all this stuff: https://luxeengine.com/get/
 
+More dependencies that aren't in the guide:
+  - [mint](https://snowkit.github.io/mint/) (git version)
+  - [differ](https://snowkit.github.io/differ/) (git version)
+  - [luxe-gifcapture](https://github.com/underscorediscovery/luxe-gifcapture) (only for cpp builds) (git version) (and its dependencies)
+
 Then just run:
 ```bash
 $ flow run
