@@ -96,19 +96,22 @@ class Main extends luxe.Game {
         createAltar = Pseudo3D.newCreator({
             frames: 14,
             size: new Vector(40, 40),
-            texture: Luxe.resources.texture("assets/textures/Altar.png")
+            texture: Luxe.resources.texture("assets/textures/Altar.png"),
+            growing: true
         });
         
         createHead = Pseudo3D.newCreator({
             frames: 39,
             size: new Vector(40, 40),
-            texture: Luxe.resources.texture("assets/textures/Head.png")
+            texture: Luxe.resources.texture("assets/textures/Head.png"),
+            growing: true
         });
         
         createSnake = Pseudo3D.newCreator({
             frames: 19,
             size: new Vector(22, 7),
-            texture: Luxe.resources.texture("assets/textures/Snake.png")
+            texture: Luxe.resources.texture("assets/textures/Snake.png"),
+            growing: true
         });
         // } creators setup'd
         

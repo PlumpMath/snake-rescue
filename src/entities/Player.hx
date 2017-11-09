@@ -19,10 +19,8 @@ class Player extends Pseudo3D {
     override public function new(options : OptionalPseudo3DOptions){
         options.frames = 19;
         options.size = new Vector(22, 7);
-        
-        var image = Luxe.resources.texture("assets/textures/Snake.png");
-        image.filter_min = image.filter_mag = FilterType.nearest;
-        options.texture = image;
+        options.growing = true;
+        options.texture = Luxe.resources.texture("assets/textures/Snake.png");
         
         super(options);
     }

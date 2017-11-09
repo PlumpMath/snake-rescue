@@ -16,7 +16,8 @@ typedef Pseudo3DOptions = {
     ?rotation_z: Float,
     size: Vector,
     ?color: Color,
-    texture: phoenix.Texture
+    texture: phoenix.Texture,
+    growing: Bool
 };
 
 typedef OptionalPseudo3DOptions = {
@@ -25,7 +26,8 @@ typedef OptionalPseudo3DOptions = {
     ?frames: Int,
     ?rotation_z: Float,
     ?size: Vector,
-    ?texture: phoenix.Texture
+    ?texture: phoenix.Texture,
+    ?growing: Bool
 };
 
 class Pseudo3D extends Entity {
@@ -50,7 +52,7 @@ class Pseudo3D extends Entity {
         frames = options.frames;
         if (options.rotation_z != null) rotation_z = options.rotation_z;
         size = options.size;
-        if (options.color != null) color = options.color;
+        color = if (options.color != null) options.color else new Color(1, 1, 1, 1);
         texture = options.texture;
         x = pos.x;
         y = pos.y;
@@ -66,6 +68,13 @@ class Pseudo3D extends Entity {
                 texture: texture,
                 depth: pos.y+(n+1)/1000
             });
+            
+            if (options.growing) {
+                spr.pos.y = 0;
+                spr.color = new Color(100, 100, 100, 1);
+                luxe.tween.Actuate.tween(spr.pos, 1, {y: -n});
+                spr.color.tween(1, {r: color.r, g: color.g, b: color.b});
+            }
             
             spr.uv = new luxe.Rectangle(size.x*n, 0, size.x, size.y);
             
