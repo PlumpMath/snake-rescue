@@ -34,19 +34,19 @@ class PlayState extends State {
             pos: new Vector(128, 128)
         });
         
-        head = Main.createHead(cast {
+        head = Main.creators["head"](cast {
             name: "Head",
             pos: new Vector(84, 124)
         });
         Main.sprites.push(head);
         
-        altar = Main.createAltar(cast {
+        altar = Main.creators["altar"](cast {
             name: "Altar",
             pos: new Vector(84, 84)
         });
         Main.sprites.push(altar);
         
-        var altar2 = Main.createAltar(cast {
+        var altar2 = Main.creators["altar"](cast {
             name: "Altar2",
             pos: new Vector(124, 84)
         });

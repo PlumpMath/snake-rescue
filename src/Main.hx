@@ -36,14 +36,12 @@ class Main extends luxe.Game {
     public static var foregroundTarget : phoenix.RenderTexture;
     public static var display_sprite : luxe.Sprite;
     
-    public static var sprites : Array<entities.Pseudo3D>;
+    public static var sprites : Array<Pseudo3D>;
     public static var player : entities.Player;
     var stateMachine : States;
     var playState : PlayState;
     
-    public static var createAltar;
-    public static var createHead;
-    public static var createSnake;
+    public static var creators : Map<String, OptionalPseudo3DOptions -> Pseudo3D>;
     
     #if cpp
     var capture : LuxeGifCapture;
@@ -63,58 +61,35 @@ class Main extends luxe.Game {
         phoenix.Texture.default_filter = FilterType.nearest;
         
         sprites = [];
+        creators = new haxe.ds.StringMap();
         
         // load all the graphics! Remember to add new graphics here!
         var parcel = new Parcel({
             textures: [
-                {id: "assets/textures/Snake.png"},
-                {id: "assets/textures/Barrel.png"},
-                {id: "assets/textures/Crate.png"},
-                {id: "assets/textures/Head.png"},
-                {id: "assets/textures/Altar.png"},
                 {id: "assets/textures/Background.png"}
             ],
             shaders: [
                 {id: "outline", vert_id: "assets/shaders/default.vert", frag_id: "assets/shaders/outline.frag"}
+            ],
+            jsons: [
+                {id: "assets/entities.json"}
             ]
         });
         
+        var entloader = new EntitiesLoader();
         // get a simple loading screen for all that stuff. Builtin will do
+        
         new ParcelProgress({
             parcel: parcel,
             background: new Color().rgb(0xf94b04),
-            oncomplete: assets_loaded // replacement for ready() since we're using it for the parcel,
-            // and since it loads asynchronously
+            oncomplete: entloader.load.bind(_, this) // for loading and making creators for all entities
         });
         
         // load it!
         parcel.load();
     }
     
-    function assets_loaded(_) { // we're ready to use all that stuff!
-        // setup creators {
-        createAltar = Pseudo3D.newCreator({
-            frames: 14,
-            size: new Vector(40, 40),
-            texture: Luxe.resources.texture("assets/textures/Altar.png"),
-            growing: true
-        });
-        
-        createHead = Pseudo3D.newCreator({
-            frames: 39,
-            size: new Vector(40, 40),
-            texture: Luxe.resources.texture("assets/textures/Head.png"),
-            growing: true
-        });
-        
-        createSnake = Pseudo3D.newCreator({
-            frames: 19,
-            size: new Vector(22, 7),
-            texture: Luxe.resources.texture("assets/textures/Snake.png"),
-            growing: true
-        });
-        // } creators setup'd
-        
+    public function assets_loaded(_) { // we're ready to use all that stuff!
         // setup batchers {
         backgroundBatcher = Luxe.renderer.create_batcher({
             name: "backgroundBatcher",
