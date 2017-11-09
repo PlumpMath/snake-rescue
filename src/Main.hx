@@ -37,6 +37,7 @@ class Main extends luxe.Game {
     public static var display_sprite : luxe.Sprite;
     
     public static var sprites : Array<Pseudo3D>;
+    public static var colliders : Array<differ.shapes.Shape>;
     public static var player : entities.Player;
     var stateMachine : States;
     var playState : PlayState;
@@ -61,18 +62,21 @@ class Main extends luxe.Game {
         phoenix.Texture.default_filter = FilterType.nearest;
         
         sprites = [];
+        colliders = [];
         creators = new haxe.ds.StringMap();
         
         // load all the graphics! Remember to add new graphics here!
         var parcel = new Parcel({
             textures: [
-                {id: "assets/textures/Background.png"}
+                {id: "assets/textures/Background.png"},
+                {id: "assets/textures/Overlay.png"}
             ],
             shaders: [
                 {id: "outline", vert_id: "assets/shaders/default.vert", frag_id: "assets/shaders/outline.frag"}
             ],
             jsons: [
-                {id: "assets/entities.json"}
+                {id: "assets/entities.json"},
+                {id: "assets/levels/level0.json"}
             ]
         });
         
@@ -119,6 +123,7 @@ class Main extends luxe.Game {
             pos: new Vector(0, 0),
             centered: false,
             batcher: foregroundBatcher,
+            depth: 0,
             shader: outlineShader
         });
         
@@ -133,7 +138,7 @@ class Main extends luxe.Game {
         // } batchers setup'd
         
         Luxe.camera.size = new Vector(256, 256);
-        Luxe.camera.bounds = new luxe.Rectangle(-128, -128, 1024, 1024);
+        Luxe.camera.bounds = new luxe.Rectangle(-128, -128, 960, 992);
         
         // setup the mint canvas {
         rendering = new LuxeMintRender();

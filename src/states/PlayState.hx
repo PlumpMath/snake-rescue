@@ -9,52 +9,61 @@ import luxe.Vector;
 import entities.Pseudo3D;
 import phoenix.Texture;
 
+import differ.shapes.Polygon;
+
 class PlayState extends State {
     
-    var altar : Pseudo3D;
-    var head : Pseudo3D;
     var background : luxe.Sprite;
+    var overlay : luxe.Sprite;
     
     override public function new(options : StateOptions){
         super(options);
         
-        var image = Luxe.resources.texture("assets/textures/Background.png");
-        image.filter_min = image.filter_mag = FilterType.nearest;
-        background = new luxe.Sprite({
-            name: "background",
-            pos: new Vector(0, 0),
-            size: new Vector(640, 640),
-            texture: image,
-            centered: false,
-            batcher: Main.backgroundBatcher
-        });
+        createBackground();
         
         Main.player = new entities.Player({
             name: "Player",
             pos: new Vector(128, 128)
         });
         
-        head = Main.creators["head"](cast {
-            name: "Head",
-            pos: new Vector(84, 124)
-        });
-        Main.sprites.push(head);
+        var ops : {entities:Array<Dynamic>} = Luxe.resources.json("assets/levels/level0.json").asset.json;
         
-        altar = Main.creators["altar"](cast {
-            name: "Altar",
-            pos: new Vector(84, 84)
-        });
-        Main.sprites.push(altar);
-        
-        var altar2 = Main.creators["altar"](cast {
-            name: "Altar2",
-            pos: new Vector(124, 84)
-        });
-        Main.sprites.push(altar2);
+        for (entity in ops.entities) {
+            var spr = Main.creators[entity.type](cast {
+                name: entity.name,
+                pos: new Vector(entity.x, entity.y)
+            });
+            Main.sprites.push(spr);
+            Main.colliders.push(spr.collider);
+        }
     }
     
     override function update(delta:Float) {
         
+    }
+    
+    function createBackground() {
+        background = new luxe.Sprite({
+            name: "background",
+            pos: new Vector(0, 0),
+            size: new Vector(576, 608),
+            texture: Luxe.resources.texture("assets/textures/Background.png"),
+            centered: false,
+            batcher: Main.backgroundBatcher
+        });
+        overlay = new luxe.Sprite({
+            name: "overlay",
+            pos: new Vector(0, 0),
+            size: new Vector(576, 608),
+            texture: Luxe.resources.texture("assets/textures/Overlay.png"),
+            centered: false,
+            batcher: Main.foregroundBatcher,
+            depth: 1
+        });
+        Main.colliders.push(Polygon.rectangle(0, 0, 576, 64, false));
+        Main.colliders.push(Polygon.rectangle(0, 32, 32, 544, false));
+        Main.colliders.push(Polygon.rectangle(544, 32, 32, 544, false));
+        Main.colliders.push(Polygon.rectangle(0, 576, 576, 32, false));
     }
 
 }

@@ -98,8 +98,8 @@ class Player extends Pseudo3D {
     }
     
     function collide() { // collision - very straightforward
-        for (spr in Main.sprites) {
-            var coll = Collision.shapeWithShape(collider, spr.collider);
+        for (spr in Main.colliders) {
+            var coll = Collision.shapeWithShape(collider, spr);
             if (coll != null) {
                 x += coll.separationX;
                 y += coll.separationY;

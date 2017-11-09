@@ -84,6 +84,10 @@ class Pseudo3D extends Entity {
         collider = Polygon.rectangle(pos.x, pos.y, size.x, size.y);
     }
     
+    override public function ondestroy() {
+        collider.destroy();
+    }
+    
     function set_rotation_z(val) {
         for (spr in sprites) {
             spr.rotation_z = val;
