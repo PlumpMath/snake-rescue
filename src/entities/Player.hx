@@ -17,8 +17,8 @@ class Player extends Pseudo3D {
     var direction = {down:false, left:false, up:false, right:false};
     
     override public function new(options : OptionalPseudo3DOptions){
-        options.frames = 19;
-        options.size = new Vector(22, 7);
+        options.frames = 7;
+        options.size = new Vector(27, 7);
         options.growing = true;
         options.texture = Luxe.resources.texture("assets/textures/Snake.png");
         

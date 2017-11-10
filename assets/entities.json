@@ -16,8 +16,8 @@
     {
         "name": "snake",
         "texture": "assets/textures/Snake.png",
-        "frames": 19,
-        "w": 22, "h": 7,
+        "frames": 7,
+        "w": 27, "h": 7,
         "growing": true
     }
 ]
