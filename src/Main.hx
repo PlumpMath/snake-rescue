@@ -13,7 +13,6 @@ import luxe.States;
 import states.PlayState;
 
 import luxe.Parcel;
-import luxe.ParcelProgress;
 
 import mint.Control;
 import mint.render.luxe.LuxeMintRender;
@@ -59,6 +58,9 @@ class Main extends luxe.Game {
     }
 
     override function ready() {
+        Luxe.camera.size = new Vector(256, 256);
+        Luxe.camera.bounds = new luxe.Rectangle(-128, -128, 960, 992);
+        
         phoenix.Texture.default_filter = FilterType.nearest;
         
         sprites = [];
@@ -83,9 +85,8 @@ class Main extends luxe.Game {
         var entloader = new EntitiesLoader();
         // get a simple loading screen for all that stuff. Builtin will do
         
-        new ParcelProgress({
+        new DestroyParcelProgress({
             parcel: parcel,
-            background: new Color().rgb(0xf94b04),
             oncomplete: entloader.load.bind(_, this) // for loading and making creators for all entities
         });
         
@@ -136,9 +137,6 @@ class Main extends luxe.Game {
             Luxe.renderer.target = null;
         });
         // } batchers setup'd
-        
-        Luxe.camera.size = new Vector(256, 256);
-        Luxe.camera.bounds = new luxe.Rectangle(-128, -128, 960, 992);
         
         // setup the mint canvas {
         rendering = new LuxeMintRender();

@@ -3,7 +3,6 @@ package ;
 import entities.Pseudo3D;
 
 import luxe.Parcel;
-import luxe.ParcelProgress;
 
 typedef EntityOptions = {
     name: String,
@@ -29,9 +28,9 @@ class EntitiesLoader {
         
         var parcel = new Parcel({ textures: textures });
         
-        new ParcelProgress({
+        new DestroyParcelProgress({
             parcel: parcel,
-            background: new luxe.Color().rgb(0xf94b04),
+            secondHalf: true,
             oncomplete: createCreators.bind(_, main)
         });
         
