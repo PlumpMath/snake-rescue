@@ -4,7 +4,7 @@ import entities.Pseudo3D;
 
 import luxe.Parcel;
 
-typedef EntityOptions = {
+typedef EntJSONOptions = {
     name: String,
     texture: String,
     frames: Int,
@@ -14,13 +14,13 @@ typedef EntityOptions = {
 
 class EntitiesLoader {
     
-    var entities : Array<EntityOptions>;
+    var entities : Array<EntJSONOptions>;
     
     public function new() { }
     
     public function load(_, main) {
         var textures = [];
-        entities = Luxe.resources.json("assets/entities.json").asset.json;
+        entities = Luxe.resources.json("assets/entities.json").asset.json.entities;
         
         for (entity in entities) {
             textures.push({id: entity.texture});

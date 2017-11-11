@@ -6,6 +6,7 @@ import entities.Pseudo3D;
 
 import luxe.Input;
 import phoenix.Texture;
+import EntitiesLoader;
 
 import luxe.Vector;
 import differ.Collision;
@@ -17,10 +18,11 @@ class Player extends Pseudo3D {
     var direction = {down:false, left:false, up:false, right:false};
     
     override public function new(options : OptionalPseudo3DOptions){
-        options.frames = 7;
-        options.size = new Vector(27, 7);
-        options.growing = true;
-        options.texture = Luxe.resources.texture("assets/textures/Snake.png");
+        var jsonOptions : EntJSONOptions = Luxe.resources.json("assets/entities.json").asset.json.player;
+        options.frames = jsonOptions.frames;
+        options.size = new Vector(jsonOptions.w, jsonOptions.h);
+        options.growing = jsonOptions.growing;
+        options.texture = Luxe.resources.texture(jsonOptions.texture);
         
         super(options);
     }
