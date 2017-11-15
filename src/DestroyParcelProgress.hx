@@ -19,6 +19,8 @@ class DestroyParcelProgress extends ParcelProgress {
 	var block : Visual;
     var background_ : Visual;
     var secondHalf : Bool = false;
+    
+    var failed : Array<String> = [];
 
 	public function new(_options:DestroyParcelProgressOptions) {
 		_options.no_visuals = true;
@@ -55,6 +57,7 @@ class DestroyParcelProgress extends ParcelProgress {
         });
 
         options.parcel.on(ParcelEvent.progress, onprogress);
+        options.parcel.on(ParcelEvent.failed, onfailed);
         options.parcel.on(ParcelEvent.complete, oncomplete);
 	}
     
@@ -69,9 +72,17 @@ class DestroyParcelProgress extends ParcelProgress {
             Luxe.camera.shake(1);
         }
 	}
+    
+    public function onfailed(_state:ParcelChange) {
+		trace('failed to load \'${_state.id}\'');
+        failed.push(_state.id);
+	}
 
 	override public function oncomplete(p:Parcel) {
-		block.destroy();
+        var failedString = failed.join(",");
+        if (failed.length > 0) throw "failed to load:\n" + failedString.substr(0,100) + (if (failedString.length > 100) "\n(check console)" else "");
+        
+        block.destroy();
         background_.destroy();
 
 		super.oncomplete(p);
