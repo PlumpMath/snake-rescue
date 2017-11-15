@@ -6,15 +6,15 @@ import luxe.options.StateOptions;
 import luxe.Input;
 
 import luxe.Vector;
-import entities.Pseudo3D;
-import phoenix.Texture;
+import luxe.tilemaps.Tilemap;
+import luxe.tilemaps.Ortho;
 
 import differ.shapes.Polygon;
 
 class PlayState extends State {
     
-    var background : luxe.Sprite;
-    var overlay : luxe.Sprite;
+    var background : Tilemap;
+    // var overlay : Tilemap;
     
     override public function new(options : StateOptions){
         super(options);
@@ -43,27 +43,33 @@ class PlayState extends State {
     }
     
     function createBackground() {
-        background = new luxe.Sprite({
-            name: "background",
-            pos: new Vector(0, 0),
-            size: new Vector(576, 608),
-            texture: Luxe.resources.texture("assets/textures/Background.png"),
-            centered: false,
-            batcher: Main.backgroundBatcher
+        
+        var json : {map:Array<Array<Int>>, tileset: String} = Luxe.resources.json("assets/levels/level0.json").asset.json;
+        background = new Tilemap({
+            x: 0,
+            y: 0,
+            w: json.map[0].length,
+            h: json.map.length,
+            tile_width  : 32,
+            tile_height : 32,
+            orientation : TilemapOrientation.ortho
         });
-        overlay = new luxe.Sprite({
-            name: "overlay",
-            pos: new Vector(0, 0),
-            size: new Vector(576, 608),
-            texture: Luxe.resources.texture("assets/textures/Overlay.png"),
-            centered: false,
-            batcher: Main.foregroundBatcher,
-            depth: 1
+        
+        background.add_tileset({
+            name: "yucatec",
+            texture: Luxe.resources.texture('assets/tilesets/${json.tileset}.png'),
+            tile_width: 32, tile_height: 32
         });
-        Main.colliders.push(Polygon.rectangle(0, 0, 576, 64, false));
-        Main.colliders.push(Polygon.rectangle(0, 32, 32, 544, false));
-        Main.colliders.push(Polygon.rectangle(544, 32, 32, 544, false));
-        Main.colliders.push(Polygon.rectangle(0, 576, 576, 32, false));
+        
+        background.add_layer({name:"0", layer:0, opacity:1, visible:true});
+        background.add_tiles_from_grid("0", json.map);
+        
+        background.display({scale:1, batcher:Main.backgroundBatcher});
+        
+        // Main.colliders.push(Polygon.rectangle(0, 0, 576, 64, false));
+        // Main.colliders.push(Polygon.rectangle(0, 32, 32, 544, false));
+        // Main.colliders.push(Polygon.rectangle(544, 32, 32, 544, false));
+        // Main.colliders.push(Polygon.rectangle(0, 576, 576, 32, false));
     }
 
 }

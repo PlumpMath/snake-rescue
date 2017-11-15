@@ -69,8 +69,7 @@ class Main extends luxe.Game {
         // load all the graphics! Remember to add new graphics here!
         var parcel = new Parcel({
             textures: [
-                {id: "assets/textures/Background.png"},
-                {id: "assets/textures/Overlay.png"}
+                {id: "assets/tilesets/Yucatec.png"}
             ],
             shaders: [
                 {id: "outline", vert_id: "assets/shaders/default.vert", frag_id: "assets/shaders/outline.frag"}
