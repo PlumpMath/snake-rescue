@@ -53,8 +53,6 @@ class Player extends Pseudo3D {
         if (direction.up && !direction.down) {
             y -= SNAKE_SPEED*dt;
         }
-        Luxe.camera.center = pos.clone();
-        Main.display_sprite.pos = pos.clone().addScalar(128);
         
         if  (rotation_z != target_rot) { // smooth turning
             var diff = target_rot-(rotation_z % 360);
@@ -70,6 +68,9 @@ class Player extends Pseudo3D {
         }
         
         collide();
+        
+        Luxe.camera.center = pos.clone();
+        Main.display_sprite.pos = pos.clone().subtractScalar(128);
     }
     
     override function onkeydown(event : KeyEvent) {
