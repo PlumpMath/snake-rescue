@@ -53,9 +53,8 @@ class Player extends Pseudo3D {
         if (direction.up && !direction.down) {
             y -= SNAKE_SPEED*dt;
         }
-        Luxe.camera.pos = pos.clone().subtractScalar(256);
-        Main.display_sprite.pos = Luxe.camera.pos.clone().addScalar(128);
-            // use camera pos because camera cannot got offscreen, and the display shouldn't either
+        Luxe.camera.center = pos.clone();
+        Main.display_sprite.pos = pos.clone().addScalar(128);
         
         if  (rotation_z != target_rot) { // smooth turning
             var diff = target_rot-(rotation_z % 360);

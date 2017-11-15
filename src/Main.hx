@@ -59,7 +59,6 @@ class Main extends luxe.Game {
 
     override function ready() {
         Luxe.camera.size = new Vector(256, 256);
-        Luxe.camera.bounds = new luxe.Rectangle(-128, -128, 960, 992);
         
         phoenix.Texture.default_filter = FilterType.nearest;
         
