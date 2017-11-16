@@ -76,16 +76,16 @@ class Main extends luxe.Game {
             ],
             jsons: [
                 {id: "assets/entities.json"},
-                {id: "assets/levels/level0.json"}
+                {id: "assets/rooms.json"}
             ]
         });
         
-        var entloader = new EntitiesLoader();
+        var assetsloader = new AssetsLoader();
         // get a simple loading screen for all that stuff. Builtin will do
         
         new DestroyParcelProgress({
             parcel: parcel,
-            oncomplete: entloader.load.bind(_, this) // for loading and making creators for all entities
+            oncomplete: assetsloader.load.bind(_, this) // for loading and making creators for all entities
         });
         
         // load it!

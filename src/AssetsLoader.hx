@@ -12,7 +12,7 @@ typedef EntJSONOptions = {
     growing: Bool
 }
 
-class EntitiesLoader {
+class AssetsLoader {
     
     var entities : Array<EntJSONOptions>;
     
@@ -26,7 +26,14 @@ class EntitiesLoader {
             textures.push({id: entity.texture});
         }
         
-        var parcel = new Parcel({ textures: textures });
+        var jsons = [];
+        var rooms: Array<String> = Luxe.resources.json("assets/rooms.json").asset.json;
+        
+        for (room in rooms) {
+            jsons.push({id: room});
+        }
+        
+        var parcel = new Parcel({textures: textures, jsons: jsons});
         
         new DestroyParcelProgress({
             parcel: parcel,

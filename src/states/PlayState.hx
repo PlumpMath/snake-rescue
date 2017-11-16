@@ -28,7 +28,7 @@ class PlayState extends State {
     override public function new(options : StateOptions){
         super(options);
         
-        MapJSON = Luxe.resources.json("assets/levels/level0.json").asset.json;
+        MapJSON = Luxe.resources.json("assets/rooms/level0.json").asset.json;
         
         createBackground();
         

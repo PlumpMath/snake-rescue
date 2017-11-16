@@ -6,7 +6,7 @@ import entities.Pseudo3D;
 
 import luxe.Input;
 import phoenix.Texture;
-import EntitiesLoader;
+import AssetsLoader;
 
 import luxe.Vector;
 import differ.Collision;
