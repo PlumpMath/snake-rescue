@@ -11,13 +11,24 @@ import luxe.tilemaps.Ortho;
 
 import differ.shapes.Polygon;
 
+typedef MapJSONOptions = {
+    entities: Array<{type:String, name:String, x:Float, y:Float}>,
+    map: Array<Array<Int>>,
+    tileset: String,
+    collision: Array<{x:Float, y:Float, w:Float, h:Float, centered:Bool}>
+}
+
 class PlayState extends State {
     
     var background : Tilemap;
     // var overlay : Tilemap;
     
+    var MapJSON : MapJSONOptions;
+    
     override public function new(options : StateOptions){
         super(options);
+        
+        MapJSON = Luxe.resources.json("assets/levels/level0.json").asset.json;
         
         createBackground();
         
@@ -26,9 +37,7 @@ class PlayState extends State {
             pos: new Vector(128, 128)
         });
         
-        var ops : {entities:Array<Dynamic>} = Luxe.resources.json("assets/levels/level0.json").asset.json;
-        
-        for (entity in ops.entities) {
+        for (entity in MapJSON.entities) {
             var spr = Main.creators[entity.type](cast {
                 name: entity.name,
                 pos: new Vector(entity.x, entity.y)
@@ -44,12 +53,11 @@ class PlayState extends State {
     
     function createBackground() {
         
-        var json : {map:Array<Array<Int>>, tileset: String} = Luxe.resources.json("assets/levels/level0.json").asset.json;
         background = new Tilemap({
             x: 0,
             y: 0,
-            w: json.map[0].length,
-            h: json.map.length,
+            w: MapJSON.map[0].length,
+            h: MapJSON.map.length,
             tile_width  : 32,
             tile_height : 32,
             orientation : TilemapOrientation.ortho
@@ -57,19 +65,18 @@ class PlayState extends State {
         
         background.add_tileset({
             name: "yucatec",
-            texture: Luxe.resources.texture('assets/tilesets/${json.tileset}.png'),
+            texture: Luxe.resources.texture('assets/tilesets/${MapJSON.tileset}.png'),
             tile_width: 32, tile_height: 32
         });
         
         background.add_layer({name:"0", layer:0, opacity:1, visible:true});
-        background.add_tiles_from_grid("0", json.map);
+        background.add_tiles_from_grid("0", MapJSON.map);
         
         background.display({scale:1, batcher:Main.backgroundBatcher});
         
-        // Main.colliders.push(Polygon.rectangle(0, 0, 576, 64, false));
-        // Main.colliders.push(Polygon.rectangle(0, 32, 32, 544, false));
-        // Main.colliders.push(Polygon.rectangle(544, 32, 32, 544, false));
-        // Main.colliders.push(Polygon.rectangle(0, 576, 576, 32, false));
+        for (collider in MapJSON.collision) {
+            Main.colliders.push(Polygon.rectangle(collider.x, collider.y, collider.w, collider.h, collider.centered));
+        }
     }
 
 }
