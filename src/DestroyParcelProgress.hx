@@ -71,10 +71,11 @@ class DestroyParcelProgress extends ParcelProgress {
             block.pos.y = 256/32 * amount;
             Luxe.camera.shake(1);
         }
+        trace('loaded \'${_state.id}\'');
 	}
     
     public function onfailed(_state:ParcelChange) {
-		trace('failed to load \'${_state.id}\'');
+		trace('failed to load \'${_state.id}\' : ${_state.error}');
         failed.push(_state.id);
 	}
 
