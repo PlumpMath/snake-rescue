@@ -1,6 +1,6 @@
 {
     "player": {
-        "texture": "assets/textures/Snake.png",
+        "texture": "assets/models/Snake.png",
         "frames": 7,
         "w": 27, "h": 7,
         "growing": true
@@ -8,21 +8,21 @@
     "entities": [
         {
             "name": "altar",
-            "texture": "assets/textures/Altar.png",
+            "texture": "assets/models/Altar.png",
             "frames": 14,
             "w": 40, "h": 40,
             "growing": true
         },
         {
             "name": "head",
-            "texture": "assets/textures/Head.png",
+            "texture": "assets/models/Head.png",
             "frames": 39,
             "w": 40, "h": 40,
             "growing": true
         },
         {
             "name": "snake",
-            "texture": "assets/textures/Snake.png",
+            "texture": "assets/models/Snake.png",
             "frames": 7,
             "w": 27, "h": 7,
             "growing": true
