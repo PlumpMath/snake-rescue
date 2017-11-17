@@ -82,6 +82,7 @@ class Pseudo3D extends Entity {
         }
         
         collider = Polygon.rectangle(pos.x, pos.y, size.x, size.y);
+        collider.rotation = rotation_z;
     }
     
     override public function ondestroy() {
@@ -118,7 +119,7 @@ class Pseudo3D extends Entity {
         return function(options : OptionalPseudo3DOptions){
             for (field in fields) {
                 var defValue = Reflect.getProperty(defOptions, field);
-                Reflect.setProperty(options, field, defValue);
+                if (defValue != null) Reflect.setProperty(options, field, defValue);
             }
             
             return new Pseudo3D(options);

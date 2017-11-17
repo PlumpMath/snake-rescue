@@ -5,11 +5,12 @@ import entities.Pseudo3D;
 import luxe.Parcel;
 
 typedef EntJSONOptions = {
-    name: String,
-    texture: String,
-    frames: Int,
-    w: Float, h: Float,
-    growing: Bool
+    ?name: String,
+    ?texture: String,
+    ?frames: Int,
+    ?w: Float, ?h: Float,
+    ?rotation_z: Float,
+    ?growing: Bool
 }
 
 class AssetsLoader {
@@ -24,7 +25,7 @@ class AssetsLoader {
         
         var fields = Reflect.fields(entities);
         for (field in fields) {
-            var entity = Reflect.getProperty(entities, field);
+            var entity: EntJSONOptions = Reflect.getProperty(entities, field);
             textures.push({id: entity.texture});
         }
         
@@ -55,6 +56,7 @@ class AssetsLoader {
                 frames: entity.frames,
                 size: new luxe.Vector(entity.w, entity.h),
                 texture: Luxe.resources.texture(entity.texture),
+                rotation_z: entity.rotation_z,
                 growing: entity.growing
             });
         }

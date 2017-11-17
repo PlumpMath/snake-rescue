@@ -4,6 +4,7 @@ import luxe.States;
 import luxe.options.StateOptions;
 
 import luxe.Input;
+import AssetsLoader;
 
 import luxe.Vector;
 import luxe.tilemaps.Tilemap;
@@ -12,7 +13,7 @@ import luxe.tilemaps.Ortho;
 import differ.shapes.Polygon;
 
 typedef MapJSONOptions = {
-    entities: Array<{type:String, name:String, x:Float, y:Float}>,
+    entities: Array<{>EntJSONOptions, type:String, x:Float, y:Float}>,
     map: Array<Array<Int>>,
     tileset: String,
     collision: Array<{x:Float, y:Float, w:Float, h:Float, centered:Bool}>
@@ -40,8 +41,10 @@ class PlayState extends State {
         for (entity in MapJSON.entities) {
             var spr = Main.creators[entity.type](cast {
                 name: entity.name,
-                pos: new Vector(entity.x, entity.y)
+                pos: new Vector(entity.x, entity.y),
+                rotation_z: entity.rotation_z
             });
+            
             Main.sprites.push(spr);
             Main.colliders.push(spr.collider);
         }
