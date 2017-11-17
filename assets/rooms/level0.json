@@ -3,8 +3,7 @@
         {
             "type": "head",
             "name": "Head",
-            "x": 52, "y": 156,
-            "rotation_z": 35
+            "x": 52, "y": 156
         },
         {
             "type": "altar",
