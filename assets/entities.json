@@ -7,14 +7,14 @@
     },
     "altar": {
         "texture": "assets/models/Altar.png",
-        "frames": 14,
-        "w": 40, "h": 40,
+        "frames": 12,
+        "w": 32, "h": 32,
         "growing": true
     },
     "head": {
         "texture": "assets/models/Head.png",
-        "frames": 39,
-        "w": 40, "h": 40,
+        "frames": 37,
+        "w": 32, "h": 32,
         "growing": true
     }
 }
