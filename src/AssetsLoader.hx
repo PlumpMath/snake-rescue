@@ -14,15 +14,17 @@ typedef EntJSONOptions = {
 
 class AssetsLoader {
     
-    var entities : Array<EntJSONOptions>;
+    var entities : Dynamic;
     
     public function new() { }
     
     public function load(_, main) {
         var textures = [];
-        entities = Luxe.resources.json("assets/entities.json").asset.json.entities;
+        entities = Luxe.resources.json("assets/entities.json").asset.json;
         
-        for (entity in entities) {
+        var fields = Reflect.fields(entities);
+        for (field in fields) {
+            var entity = Reflect.getProperty(entities, field);
             textures.push({id: entity.texture});
         }
         
@@ -45,8 +47,11 @@ class AssetsLoader {
     }
     
     function createCreators(_, main) {
-        for (entity in entities) {
-            Main.creators[entity.name] = Pseudo3D.newCreator({
+        var fields = Reflect.fields(entities);
+        for (field in fields) {
+            var entity = Reflect.getProperty(entities, field);
+            
+            Main.creators[field] = Pseudo3D.newCreator({
                 frames: entity.frames,
                 size: new luxe.Vector(entity.w, entity.h),
                 texture: Luxe.resources.texture(entity.texture),

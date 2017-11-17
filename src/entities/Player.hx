@@ -18,7 +18,7 @@ class Player extends Pseudo3D {
     var direction = {down:false, left:false, up:false, right:false};
     
     override public function new(options : OptionalPseudo3DOptions){
-        var jsonOptions : EntJSONOptions = Luxe.resources.json("assets/entities.json").asset.json.player;
+        var jsonOptions : EntJSONOptions = Luxe.resources.json("assets/entities.json").asset.json.snake;
         options.frames = jsonOptions.frames;
         options.size = new Vector(jsonOptions.w, jsonOptions.h);
         options.growing = jsonOptions.growing;
