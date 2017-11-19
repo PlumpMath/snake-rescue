@@ -7,8 +7,8 @@ import luxe.Parcel;
 typedef EntJSONOptions = {
     ?name: String,
     ?texture: String,
-    ?frames: Int,
-    ?w: Float, ?h: Float,
+    ?h: Int,
+    ?w: Float, ?d: Float,
     ?rotation_z: Float,
     ?growing: Bool
 }
@@ -53,8 +53,8 @@ class AssetsLoader {
             var entity = Reflect.getProperty(entities, field);
             
             Main.creators[field] = Pseudo3D.newCreator({
-                frames: entity.frames,
-                size: new luxe.Vector(entity.w, entity.h),
+                height: entity.h,
+                size: new luxe.Vector(entity.w, entity.d),
                 texture: Luxe.resources.texture(entity.texture),
                 rotation_z: entity.rotation_z,
                 growing: entity.growing

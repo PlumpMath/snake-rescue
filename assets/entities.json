@@ -1,20 +1,20 @@
 {
     "snake": {
         "texture": "assets/models/Snake.png",
-        "frames": 7,
-        "w": 27, "h": 7,
+        "h": 7,
+        "w": 27, "d": 7,
         "growing": true
     },
     "az-altar": {
         "texture": "assets/models/aztec/Altar.png",
-        "frames": 12,
-        "w": 32, "h": 32,
+        "h": 12,
+        "w": 32, "d": 32,
         "growing": true
     },
     "az-head": {
         "texture": "assets/models/aztec/Head.png",
-        "frames": 37,
-        "w": 32, "h": 32,
+        "h": 37,
+        "w": 32, "d": 32,
         "growing": true
     }
 }

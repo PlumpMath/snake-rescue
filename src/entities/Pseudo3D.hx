@@ -12,19 +12,19 @@ import differ.shapes.*;
 typedef Pseudo3DOptions = {
     > EntityOptions,
     
-    frames: Int,
+    height: Int,
     ?rotation_z: Float,
     size: Vector,
     ?color: Color,
     texture: phoenix.Texture,
-    growing: Bool
+    growing: Bool,
+    ?frames: Int
 };
 
 typedef OptionalPseudo3DOptions = {
     > Pseudo3DOptions,
     
-    ?frames: Int,
-    ?rotation_z: Float,
+    ?height: Int,
     ?size: Vector,
     ?texture: phoenix.Texture,
     ?growing: Bool
@@ -36,11 +36,14 @@ class Pseudo3D extends Entity {
     public var x(default, set): Float = 0;
     public var y(default, set): Float = 0;
     
-    public var frames : Int;
+    public var height : Int;
     public var sprites : Array<Sprite>;
     public var size : Vector;
     public var color: Color;
     public var texture : phoenix.Texture;
+    
+    public var frames : Int;
+    public var frame(default, set): Int;
     
     public var collider : differ.shapes.Shape;
     
@@ -49,7 +52,7 @@ class Pseudo3D extends Entity {
         
         super(options);
         
-        frames = options.frames;
+        height = options.height;
         if (options.rotation_z != null) rotation_z = options.rotation_z;
         size = options.size;
         color = if (options.color != null) options.color else new Color(1, 1, 1, 1);
@@ -57,7 +60,10 @@ class Pseudo3D extends Entity {
         x = pos.x;
         y = pos.y;
         
-        for (n in 0...frames) {
+        frames = if (options.frames == null || options.frames < 0) 0 else options.frames;
+        frame = 0;
+        
+        for (n in 0...height) {
             var spr = new Sprite({
                 parent: this,
                 name: name + "." + n,
@@ -76,7 +82,7 @@ class Pseudo3D extends Entity {
                 spr.color.tween(1, {r: color.r, g: color.g, b: color.b});
             }
             
-            spr.uv = new luxe.Rectangle(size.x*n, 0, size.x, size.y);
+            spr.uv = new luxe.Rectangle(size.x*n, size.y*frame, size.x, size.y);
             
             sprites.push(spr);
         }
@@ -112,6 +118,15 @@ class Pseudo3D extends Entity {
         pos.y = val;
         if (collider!=null) collider.y = val;
         return y = val;
+    }
+    
+    function set_frame(val) {
+        var n:Float = 0;
+        for (spr in sprites) {
+            spr.uv.y = size.y*val;
+            n++;
+        }
+        return frame = val;
     }
     
     public static function newCreator(defOptions : Pseudo3DOptions) {
