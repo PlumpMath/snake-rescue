@@ -10,7 +10,8 @@ typedef EntJSONOptions = {
     ?h: Int,
     ?w: Float, ?d: Float,
     ?rotation_z: Float,
-    ?growing: Bool
+    ?growing: Bool,
+    ?frames: Int
 }
 
 class AssetsLoader {
@@ -57,7 +58,8 @@ class AssetsLoader {
                 size: new luxe.Vector(entity.w, entity.d),
                 texture: Luxe.resources.texture(entity.texture),
                 rotation_z: entity.rotation_z,
-                growing: entity.growing
+                growing: entity.growing,
+                frames: entity.frames
             });
         }
         
