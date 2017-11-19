@@ -123,10 +123,8 @@ class Pseudo3D extends Entity {
     
     function set_frame(val) {
         var actual = if(val < 0) 0 else val%frames;
-        var n:Int = 0;
         for (spr in sprites) {
             spr.uv.y = size.y*actual;
-            n++;
         }
         return frame = actual;
     }
