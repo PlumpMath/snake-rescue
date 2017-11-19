@@ -1,17 +1,17 @@
 {
     "entities": [
         {
-            "type": "head",
+            "type": "az-head",
             "name": "Head",
             "x": 52, "y": 156
         },
         {
-            "type": "altar",
+            "type": "az-altar",
             "name": "Altar",
             "x": 52, "y": 116
         },
         {
-            "type": "altar",
+            "type": "az-altar",
             "name": "Altar2",
             "x": 92, "y": 116
         }

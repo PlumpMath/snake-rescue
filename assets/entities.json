@@ -5,14 +5,14 @@
         "w": 27, "h": 7,
         "growing": true
     },
-    "altar": {
-        "texture": "assets/models/Altar.png",
+    "az-altar": {
+        "texture": "assets/models/aztec/Altar.png",
         "frames": 12,
         "w": 32, "h": 32,
         "growing": true
     },
-    "head": {
-        "texture": "assets/models/Head.png",
+    "az-head": {
+        "texture": "assets/models/aztec/Head.png",
         "frames": 37,
         "w": 32, "h": 32,
         "growing": true
