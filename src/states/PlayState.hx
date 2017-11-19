@@ -24,6 +24,8 @@ class PlayState extends State {
     var background : Tilemap;
     // var overlay : Tilemap;
     
+    var ahuizotl : entities.Pseudo3D;
+    
     var MapJSON : MapJSONOptions;
     
     override public function new(options : StateOptions){
@@ -48,10 +50,20 @@ class PlayState extends State {
             Main.sprites.push(spr);
             Main.colliders.push(spr.collider);
         }
+        
+        ahuizotl = Main.creators["az-ahuizotl"](cast {
+            name: "ah",
+            pos: new Vector(200, 200)
+        });
     }
     
+    var total_time: Float = 0;
     override function update(delta:Float) {
-        
+        if(ahuizotl == null)return;
+        total_time += delta/0.1;
+        total_time = total_time%4;
+        ahuizotl.frame = Math.floor(total_time);
+        ahuizotl.rotation_z += 20*delta;
     }
     
     function createBackground() {

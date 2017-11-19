@@ -16,5 +16,12 @@
         "h": 37,
         "w": 32, "d": 32,
         "growing": true
+    },
+    "az-ahuizotl": {
+        "texture": "assets/models/aztec/Ahuizotl.png",
+        "frames": 4,
+        "h": 9,
+        "w": 24, "d": 4,
+        "growing": true
     }
 }
