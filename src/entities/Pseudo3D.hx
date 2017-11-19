@@ -60,7 +60,7 @@ class Pseudo3D extends Entity {
         x = pos.x;
         y = pos.y;
         
-        frames = if (options.frames == null || options.frames < 0) 0 else options.frames;
+        frames = if (options.frames == null || options.frames < 1) 1 else options.frames;
         frame = 0;
         
         for (n in 0...height) {
@@ -86,6 +86,7 @@ class Pseudo3D extends Entity {
             
             sprites.push(spr);
         }
+        
         
         collider = Polygon.rectangle(pos.x, pos.y, size.x, size.y);
         collider.rotation = rotation_z;
@@ -122,7 +123,7 @@ class Pseudo3D extends Entity {
     
     function set_frame(val) {
         var actual = if(val < 0) 0 else val%frames;
-        var n:Float = 0;
+        var n:Int = 0;
         for (spr in sprites) {
             spr.uv.y = size.y*actual;
             n++;
