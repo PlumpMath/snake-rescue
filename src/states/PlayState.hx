@@ -35,8 +35,8 @@ class PlayState extends State {
         
         Luxe.renderer.clear_color = new luxe.Color().rgb(0x2D1F2B);
         
-        MapJSONa = Luxe.resources.json("assets/rooms/room1a.json").asset.json;
-        MapJSONb = Luxe.resources.json("assets/rooms/room1b.json").asset.json;
+        MapJSONa = Luxe.resources.json("assets/rooms/room2a.json").asset.json;
+        MapJSONb = Luxe.resources.json("assets/rooms/room2c.json").asset.json;
         
         createBackground();
         
@@ -93,8 +93,8 @@ class PlayState extends State {
         backgrounda.add_tiles_from_grid("0", MapJSONa.map);
         
         backgroundb = new Tilemap({
-            x: 0,
-            y: 288,
+            x: 288,
+            y: 0,
             w: MapJSONb.map[0].length,
             h: MapJSONb.map.length,
             tile_width  : 32,
@@ -118,7 +118,7 @@ class PlayState extends State {
             Main.colliders.push(Polygon.rectangle(collider.x, collider.y, collider.w, collider.h, collider.centered));
         }
         for (collider in MapJSONb.collision) {
-            Main.colliders.push(Polygon.rectangle(collider.x, collider.y+288, collider.w, collider.h, collider.centered));
+            Main.colliders.push(Polygon.rectangle(collider.x+288, collider.y, collider.w, collider.h, collider.centered));
         }
     }
 
