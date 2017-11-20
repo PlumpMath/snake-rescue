@@ -21,17 +21,20 @@ typedef MapJSONOptions = {
 
 class PlayState extends State {
     
-    var background : Tilemap;
+    var backgrounda : Tilemap;
+    var backgroundb : Tilemap;
     // var overlay : Tilemap;
     
     var ahuizotl : entities.Pseudo3D;
     
-    var MapJSON : MapJSONOptions;
+    var MapJSONa : MapJSONOptions;
+    var MapJSONb : MapJSONOptions;
     
     override public function new(options : StateOptions){
         super(options);
         
-        MapJSON = Luxe.resources.json("assets/rooms/room0.json").asset.json;
+        MapJSONa = Luxe.resources.json("assets/rooms/room1a.json").asset.json;
+        MapJSONb = Luxe.resources.json("assets/rooms/room1b.json").asset.json;
         
         createBackground();
         
@@ -40,7 +43,7 @@ class PlayState extends State {
             pos: new Vector(128, 128)
         });
         
-        for (entity in MapJSON.entities) {
+        for (entity in MapJSONa.entities) {
             var spr = Main.creators[entity.type](cast {
                 name: entity.name,
                 pos: new Vector(entity.x, entity.y),
@@ -68,29 +71,52 @@ class PlayState extends State {
     
     function createBackground() {
         
-        background = new Tilemap({
+        backgrounda = new Tilemap({
             x: 0,
             y: 0,
-            w: MapJSON.map[0].length,
-            h: MapJSON.map.length,
+            w: MapJSONa.map[0].length,
+            h: MapJSONa.map.length,
             tile_width  : 32,
             tile_height : 32,
             orientation : TilemapOrientation.ortho
         });
         
-        background.add_tileset({
+        backgrounda.add_tileset({
             name: "yucatec",
-            texture: Luxe.resources.texture('assets/tilesets/${MapJSON.tileset}.png'),
+            texture: Luxe.resources.texture('assets/tilesets/${MapJSONa.tileset}.png'),
             tile_width: 32, tile_height: 32
         });
         
-        background.add_layer({name:"0", layer:0, opacity:1, visible:true});
-        background.add_tiles_from_grid("0", MapJSON.map);
+        backgrounda.add_layer({name:"0", layer:0, opacity:1, visible:true});
+        backgrounda.add_tiles_from_grid("0", MapJSONa.map);
         
-        background.display({scale:1, batcher:Main.backgroundBatcher});
+        backgroundb = new Tilemap({
+            x: 0,
+            y: 288,
+            w: MapJSONb.map[0].length,
+            h: MapJSONb.map.length,
+            tile_width  : 32,
+            tile_height : 32,
+            orientation : TilemapOrientation.ortho
+        });
         
-        for (collider in MapJSON.collision) {
+        backgroundb.add_tileset({
+            name: "yucatec",
+            texture: Luxe.resources.texture('assets/tilesets/${MapJSONb.tileset}.png'),
+            tile_width: 32, tile_height: 32
+        });
+        
+        backgroundb.add_layer({name:"0", layer:0, opacity:1, visible:true});
+        backgroundb.add_tiles_from_grid("0", MapJSONb.map);
+        
+        backgroundb.display({scale:1, batcher:Main.backgroundBatcher});
+        backgrounda.display({scale:1, batcher:Main.backgroundBatcher});
+        
+        for (collider in MapJSONa.collision) {
             Main.colliders.push(Polygon.rectangle(collider.x, collider.y, collider.w, collider.h, collider.centered));
+        }
+        for (collider in MapJSONb.collision) {
+            Main.colliders.push(Polygon.rectangle(collider.x, collider.y+288, collider.w, collider.h, collider.centered));
         }
     }
 
