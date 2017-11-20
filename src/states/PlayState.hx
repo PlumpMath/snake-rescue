@@ -33,6 +33,8 @@ class PlayState extends State {
     override public function new(options : StateOptions){
         super(options);
         
+        Luxe.renderer.clear_color = new luxe.Color().rgb(0x2D1F2B);
+        
         MapJSONa = Luxe.resources.json("assets/rooms/room1a.json").asset.json;
         MapJSONb = Luxe.resources.json("assets/rooms/room1b.json").asset.json;
         
