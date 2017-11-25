@@ -1,8 +1,11 @@
-[
-    "assets/rooms/level0.json",
-    "assets/rooms/room0.json",
-    "assets/rooms/room1a.json",
-    "assets/rooms/room1b.json",
-    "assets/rooms/room2a.json",
-    "assets/rooms/room2c.json"
-]
+{
+    "level0": "assets/rooms/level0.json",
+    "room0": "assets/rooms/room0.json",
+    "room1": [
+        ["assets/rooms/room1a.json"],
+        ["assets/rooms/room1b.json"]
+    ],
+    "room2": [
+        ["assets/rooms/room2a.json", "assets/rooms/room2c.json"]
+    ]
+}

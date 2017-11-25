@@ -31,11 +31,31 @@ class AssetsLoader {
         }
         
         var jsons = [];
-        var rooms: Array<String> = Luxe.resources.json("assets/rooms.json").asset.json;
+        var rooms: Dynamic = Luxe.resources.json("assets/rooms.json").asset.json;
         
-        for (room in rooms) {
-            jsons.push({id: room});
+        var failed = [];
+        var fields = Reflect.fields(rooms);
+        for (field in fields) {
+            var room : Dynamic = Reflect.getProperty(rooms, field);
+            
+            if (Std.is(room, String)) {
+                jsons.push({id: room});
+            } else {
+                try {
+                    var grid : Array<Array<String>> = cast room;
+                    for (y in grid) {
+                        for (x in y) {
+                            jsons.push({id: x});
+                        }
+                    }
+                } catch(e:Dynamic) {
+                    failed.push(field);
+                    utils.Log.log('invalid format in: \'$field\'');
+                }
+            }
         }
+        var failedString = failed.join(",");
+        if (failed.length > 0) throw "invalid format in:\n" + failedString.substr(0,100) + (if (failedString.length > 100) "\n(check console)" else "");
         
         var parcel = new Parcel({textures: textures, jsons: jsons});
         
