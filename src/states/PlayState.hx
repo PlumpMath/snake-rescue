@@ -72,8 +72,6 @@ class PlayState extends State {
         mapmap.addPiece("assets/rooms/room3a.json", 2, 3);
         mapmap.addPiece("assets/rooms/room3d.json", 3, 3);
         
-        mapmap.display();
-        
         // for (entity in MapJSONa.entities) {
             // var spr = Main.creators[entity.type](cast {
                 // name: entity.name,

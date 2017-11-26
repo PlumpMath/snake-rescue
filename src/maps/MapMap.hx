@@ -20,7 +20,7 @@ typedef MapJSONOptions = {
     tileset: String,
     collision: Array<{x:Float, y:Float, w:Float, h:Float, centered:Bool}>,
     left_wall: Bool, right_wall: Bool,
-    ?tilemap: Tilemap
+    ?tilemap: Tilemap, ?colliders: Array<differ.shapes.Shape>
 }
 
 class MapMap {
@@ -56,7 +56,7 @@ class MapMap {
     
     public function addRoom(_room:String, x:Int, y:Int) : Bool {
         if(x < 0 || y < 0 || x >= w || y >= h) return false;
-        if (mapmap[y][x] != null) return false;
+        if (getPiece(x, y) != null) return false;
         
         var room : Dynamic = Reflect.getProperty(Luxe.resources.json("assets/rooms.json").asset.json, _room);
         
@@ -69,10 +69,12 @@ class MapMap {
             var placed : Array<luxe.Vector> = [];
             for (yy in 0...room.length) {
                 for (xx in 0...room[yy].length) {
-                    couldPlace = addPiece(room[yy][xx], x+xx, y+yy);
+                    var nx = x+xx;
+                    var ny = y+yy;
+                    couldPlace = addPiece(room[yy][xx], nx, ny);
                     
                     if (couldPlace) {
-                        placed.push(new luxe.Vector(x+xx, y+yy));
+                        placed.push(new luxe.Vector(nx, ny));
                     } else { break; }
                 }
                 if (!couldPlace) break;
@@ -90,11 +92,12 @@ class MapMap {
     
     public function addPiece(asset:String, x:Int, y:Int) : Bool {
         if (x < 0 || y < 0 || x >= w || y >= h) return false;
-        if (mapmap[y][x] != null) return false;
+        if (getPiece(x, y) != null) return false;
         
         var options : MapJSONOptions = Reflect.copy(Luxe.resources.json(asset).asset.json);
             // there can only be 1 reference alive to an instance!
             // So if I add the same room/piece in another place in the mapmap, the first one will disappear!
+        options.colliders = [];
         
         var tilemap = new Tilemap({
             x: (32*map_width)*x,
@@ -115,36 +118,38 @@ class MapMap {
         tilemap.add_layer({name:"0", layer:0, opacity:1, visible:true});
         tilemap.add_tiles_from_grid("0", options.map);
         
+        tilemap.display({scale:1, batcher:Main.backgroundBatcher});
+        for (collider in options.collision) {
+            var coll = Polygon.rectangle(tilemap.pos.x + collider.x,
+                                         tilemap.pos.y + collider.y,
+                                         collider.w, collider.h,
+                                         collider.centered);
+            Main.colliders.push(coll);
+            options.colliders.push(coll); // what i explained above at the start of this function doesn't apply here???
+        }
+        
         options.tilemap = tilemap;
         mapmap[y][x] = options;
+        
+        addDoorways(x, y);
         
         return true;
     }
     
     public function getPiece(x:Int, y:Int) {
+        if (x < 0 || y < 0 || x >= w || y >= h) return null;
         return mapmap[y][x];
     }
     
     public function removePiece(x:Int, y:Int) {
-        if (mapmap[y][x] != null) {
-            mapmap[y][x].tilemap.destroy();
-            mapmap[y][x] = null;
-        }
-    }
-    
-    public function display() {
-        for (row in mapmap) {
-            for (options in row) {
-                if (options != null) {
-                    options.tilemap.display({scale:1, batcher:Main.backgroundBatcher});
-                    for (collider in options.collision) {
-                        Main.colliders.push(Polygon.rectangle(options.tilemap.pos.x + collider.x,
-                                                              options.tilemap.pos.y + collider.y,
-                                                              collider.w, collider.h,
-                                                              collider.centered));
-                    }
-                }
+        var piece = getPiece(x, y);
+        if (piece != null) {
+            piece.tilemap.destroy();
+            for (collider in piece.colliders) {
+                Main.colliders.remove(collider);
+                collider.destroy();
             }
+            mapmap[y][x] = null;
         }
     }
     
@@ -152,6 +157,49 @@ class MapMap {
         for (y in 0...mapmap.length) {
             for (x in 0...mapmap[y].length) {
                 removePiece(x, y);
+            }
+        }
+    }
+    
+    function addDoorways(x : Int, y : Int) {
+        var current = getPiece(x, y);
+        
+        var offset = Math.ceil((map_height - 5) / 2);
+        if (current.left_wall) {
+            var side = getPiece(x-1, y);
+            if (side != null && side.right_wall) {
+                current.tilemap.tile_at("0", 0, offset).id = 15;
+                current.tilemap.tile_at("0", 0, offset+1).id = 6;
+                current.tilemap.tile_at("0", 0, offset+2).id = 12;
+                current.tilemap.tile_at("0", 0, offset+3).id = 50;
+                current.tilemap.tile_at("0", 0, offset+4).id = 3;
+                current.tilemap.tile_at("0", 1, offset+3).id = 41;
+                
+                side.tilemap.tile_at("0", map_width-1, offset).id = 13;
+                side.tilemap.tile_at("0", map_width-1, offset+1).id = 6;
+                side.tilemap.tile_at("0", map_width-1, offset+2).id = 12;
+                side.tilemap.tile_at("0", map_width-1, offset+3).id = 50;
+                side.tilemap.tile_at("0", map_width-1, offset+4).id = 1;
+                side.tilemap.tile_at("0", map_width-2, offset+3).id = 40;
+            }
+        }
+        
+        if (current.right_wall) {
+            var side = getPiece(x+1, y);
+            if (side != null && side.left_wall) {
+                side.tilemap.tile_at("0", 0, offset).id = 15;
+                side.tilemap.tile_at("0", 0, offset+1).id = 6;
+                side.tilemap.tile_at("0", 0, offset+2).id = 12;
+                side.tilemap.tile_at("0", 0, offset+3).id = 50;
+                side.tilemap.tile_at("0", 0, offset+4).id = 3;
+                side.tilemap.tile_at("0", 1, offset+3).id = 41;
+                
+                current.tilemap.tile_at("0", map_width-1, offset).id = 13;
+                current.tilemap.tile_at("0", map_width-1, offset+1).id = 6;
+                current.tilemap.tile_at("0", map_width-1, offset+2).id = 12;
+                current.tilemap.tile_at("0", map_width-1, offset+3).id = 50;
+                current.tilemap.tile_at("0", map_width-1, offset+4).id = 1;
+                current.tilemap.tile_at("0", map_width-2, offset+3).id = 40;
             }
         }
     }
