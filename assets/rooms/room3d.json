@@ -13,7 +13,7 @@
     ],
     "tileset": "Yucatec",
     "collision": [
-        {"x": 256, "y": 96,  "w": 32,  "h": 64,  "centered": false},
+        {"x": 256, "y": 0,   "w": 32,  "h": 160, "centered": false},
         {"x": 256, "y": 192, "w": 32,  "h": 64,  "centered": false},
         {"x": 0,   "y": 256, "w": 288, "h": 32,  "centered": false},
         {"x": 0,   "y": 0,   "w": 128, "h": 128, "centered": false}
