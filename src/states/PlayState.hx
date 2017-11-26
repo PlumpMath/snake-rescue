@@ -16,27 +16,18 @@ typedef MapJSONOptions = {
     entities: Array<{>EntJSONOptions, type:String, x:Float, y:Float}>,
     map: Array<Array<Int>>,
     tileset: String,
-    collision: Array<{x:Float, y:Float, w:Float, h:Float, centered:Bool}>
+    collision: Array<{x:Float, y:Float, w:Float, h:Float, centered:Bool}>,
+    ?x: Int, ?y: Int
 }
 
 class PlayState extends State {
     
-    var backgrounda : Tilemap;
-    var backgroundb : Tilemap;
-    // var overlay : Tilemap;
-    
     var ahuizotl : entities.Pseudo3D;
-    
-    var MapJSONa : MapJSONOptions;
-    var MapJSONb : MapJSONOptions;
     
     override public function new(options : StateOptions){
         super(options);
         
         Luxe.renderer.clear_color = new luxe.Color().rgb(0x2D1F2B);
-        
-        MapJSONa = Luxe.resources.json("assets/rooms/room2a.json").asset.json;
-        MapJSONb = Luxe.resources.json("assets/rooms/room2c.json").asset.json;
         
         createBackground();
         
@@ -44,17 +35,6 @@ class PlayState extends State {
             name: "Player",
             pos: new Vector(128, 128)
         });
-        
-        for (entity in MapJSONa.entities) {
-            var spr = Main.creators[entity.type](cast {
-                name: entity.name,
-                pos: new Vector(entity.x, entity.y),
-                rotation_z: entity.rotation_z
-            });
-            
-            Main.sprites.push(spr);
-            Main.colliders.push(spr.collider);
-        }
         
         ahuizotl = Main.creators["az-ahuizotl"](cast {
             name: "ah",
@@ -72,54 +52,38 @@ class PlayState extends State {
     }
     
     function createBackground() {
-        
-        backgrounda = new Tilemap({
+        var mapmap = new maps.MapMap({
             x: 0,
             y: 0,
-            w: MapJSONa.map[0].length,
-            h: MapJSONa.map.length,
-            tile_width  : 32,
-            tile_height : 32,
-            orientation : TilemapOrientation.ortho
+            w: 4,
+            h: 4,
+            map_width  : 9,
+            map_height : 9
         });
         
-        backgrounda.add_tileset({
-            name: "yucatec",
-            texture: Luxe.resources.texture('assets/tilesets/${MapJSONa.tileset}.png'),
-            tile_width: 32, tile_height: 32
-        });
+        mapmap.addPiece("assets/rooms/room0.json", 0, 0);
+        mapmap.addRoom("room0", 0, 1);
+        mapmap.addRoom("room1", 1, 0);
+        mapmap.addRoom("room2", 0, 2);
+        mapmap.addRoom("room3", 2, 1);
         
-        backgrounda.add_layer({name:"0", layer:0, opacity:1, visible:true});
-        backgrounda.add_tiles_from_grid("0", MapJSONa.map);
+        mapmap.addPiece("assets/rooms/room1a.json", 0, 3);
+        mapmap.addPiece("assets/rooms/room2a.json", 1, 3);
+        mapmap.addPiece("assets/rooms/room3a.json", 2, 3);
+        mapmap.addPiece("assets/rooms/room3d.json", 3, 3);
         
-        backgroundb = new Tilemap({
-            x: 288,
-            y: 0,
-            w: MapJSONb.map[0].length,
-            h: MapJSONb.map.length,
-            tile_width  : 32,
-            tile_height : 32,
-            orientation : TilemapOrientation.ortho
-        });
+        mapmap.display();
         
-        backgroundb.add_tileset({
-            name: "yucatec",
-            texture: Luxe.resources.texture('assets/tilesets/${MapJSONb.tileset}.png'),
-            tile_width: 32, tile_height: 32
-        });
-        
-        backgroundb.add_layer({name:"0", layer:0, opacity:1, visible:true});
-        backgroundb.add_tiles_from_grid("0", MapJSONb.map);
-        
-        backgroundb.display({scale:1, batcher:Main.backgroundBatcher});
-        backgrounda.display({scale:1, batcher:Main.backgroundBatcher});
-        
-        for (collider in MapJSONa.collision) {
-            Main.colliders.push(Polygon.rectangle(collider.x, collider.y, collider.w, collider.h, collider.centered));
-        }
-        for (collider in MapJSONb.collision) {
-            Main.colliders.push(Polygon.rectangle(collider.x+288, collider.y, collider.w, collider.h, collider.centered));
-        }
+        // for (entity in MapJSONa.entities) {
+            // var spr = Main.creators[entity.type](cast {
+                // name: entity.name,
+                // pos: new Vector(entity.x, entity.y),
+                // rotation_z: entity.rotation_z
+            // });
+            
+            // Main.sprites.push(spr);
+            // Main.colliders.push(spr.collider);
+        // }
     }
 
 }
