@@ -20,7 +20,8 @@ typedef MapJSONOptions = {
     tileset: String,
     collision: Array<{x:Float, y:Float, w:Float, h:Float, centered:Bool}>,
     left_wall: Bool, right_wall: Bool,
-    ?tilemap: Tilemap, ?colliders: Array<differ.shapes.Shape>
+    ?tilemap: Tilemap, ?colliders: Array<differ.shapes.Shape>,
+    ?left_collider: differ.shapes.Shape, ?right_collider: differ.shapes.Shape
 }
 
 class MapMap {
@@ -119,6 +120,7 @@ class MapMap {
         tilemap.add_tiles_from_grid("0", options.map);
         
         tilemap.display({scale:1, batcher:Main.backgroundBatcher});
+        var offset = Math.ceil((map_height - 5) / 2)+3;
         for (collider in options.collision) {
             var coll = Polygon.rectangle(tilemap.pos.x + collider.x,
                                          tilemap.pos.y + collider.y,
@@ -127,6 +129,15 @@ class MapMap {
             Main.colliders.push(coll);
             options.colliders.push(coll); // what i explained above at the start of this function doesn't apply here???
         }
+            
+        options.left_collider = Polygon.rectangle(tilemap.pos.x,
+                                                  tilemap.pos.y + offset*32,
+                                                  32, 32, false);
+        options.right_collider = Polygon.rectangle(tilemap.pos.x + (map_width-1)*32,
+                                                  tilemap.pos.y + offset*32,
+                                                  32, 32, false);
+        Main.colliders.push(options.left_collider);
+        Main.colliders.push(options.right_collider);
         
         options.tilemap = tilemap;
         mapmap[y][x] = options;
@@ -149,6 +160,12 @@ class MapMap {
                 Main.colliders.remove(collider);
                 collider.destroy();
             }
+            
+            Main.colliders.remove(piece.left_collider);
+            Main.colliders.remove(piece.right_collider);
+            if (piece.left_collider != null) piece.left_collider.destroy();
+            if (piece.right_collider != null) piece.right_collider.destroy();
+            
             mapmap[y][x] = null;
         }
     }
@@ -174,6 +191,9 @@ class MapMap {
                 current.tilemap.tile_at("0", 0, offset+3).id = 50;
                 current.tilemap.tile_at("0", 0, offset+4).id = 3;
                 current.tilemap.tile_at("0", 1, offset+3).id = 41;
+                Main.colliders.remove(current.left_collider);
+                if (current.left_collider != null) current.left_collider.destroy();
+                current.left_collider = null;
                 
                 side.tilemap.tile_at("0", map_width-1, offset).id = 13;
                 side.tilemap.tile_at("0", map_width-1, offset+1).id = 6;
@@ -181,6 +201,9 @@ class MapMap {
                 side.tilemap.tile_at("0", map_width-1, offset+3).id = 50;
                 side.tilemap.tile_at("0", map_width-1, offset+4).id = 1;
                 side.tilemap.tile_at("0", map_width-2, offset+3).id = 40;
+                Main.colliders.remove(side.right_collider);
+                if (side.right_collider != null) side.right_collider.destroy();
+                side.right_collider = null;
             }
         }
         
@@ -193,6 +216,9 @@ class MapMap {
                 side.tilemap.tile_at("0", 0, offset+3).id = 50;
                 side.tilemap.tile_at("0", 0, offset+4).id = 3;
                 side.tilemap.tile_at("0", 1, offset+3).id = 41;
+                Main.colliders.remove(side.left_collider);
+                if (side.left_collider != null) side.left_collider.destroy();
+                side.left_collider = null;
                 
                 current.tilemap.tile_at("0", map_width-1, offset).id = 13;
                 current.tilemap.tile_at("0", map_width-1, offset+1).id = 6;
@@ -200,6 +226,9 @@ class MapMap {
                 current.tilemap.tile_at("0", map_width-1, offset+3).id = 50;
                 current.tilemap.tile_at("0", map_width-1, offset+4).id = 1;
                 current.tilemap.tile_at("0", map_width-2, offset+3).id = 40;
+                Main.colliders.remove(current.right_collider);
+                if (current.right_collider != null) current.right_collider.destroy();
+                current.right_collider = null;
             }
         }
     }
