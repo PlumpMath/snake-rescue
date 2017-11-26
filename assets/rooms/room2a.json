@@ -11,6 +11,7 @@
         [ 9,49,50,50,50,50,50,50,50],
         [10, 2, 2, 2, 2, 2, 2, 2, 2]
     ],
+    "left_wall": true, "right_wall": false,
     "tileset": "Yucatec",
     "collision": [
         {"x": 0,   "y": 0,   "w": 288, "h": 96,  "centered": false},

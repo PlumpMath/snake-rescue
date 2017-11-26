@@ -11,6 +11,7 @@
         [ 9,43,44,25,26,27,44,45, 7],
         [ 9,43,44,25,26,27,44,45, 7]
     ],
+    "left_wall": true, "right_wall": true,
     "tileset": "Yucatec",
     "collision": [
         {"x": 0,   "y": 0,   "w": 288, "h": 96,  "centered": false},

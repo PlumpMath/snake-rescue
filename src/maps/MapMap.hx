@@ -19,6 +19,7 @@ typedef MapJSONOptions = {
     map: Array<Array<Int>>,
     tileset: String,
     collision: Array<{x:Float, y:Float, w:Float, h:Float, centered:Bool}>,
+    left_wall: Bool, right_wall: Bool,
     ?tilemap: Tilemap
 }
 
@@ -62,7 +63,7 @@ class MapMap {
         if (Std.is(room, String)) {
             return addPiece(room, x, y);
         } else {
-            var room : Array<Array<String>> = cast room; // it can't be any other thing. It has already been checked AssetsLoader.hx
+            var room : Array<Array<String>> = cast room; // it can't be any other thing. It has already been checked in AssetsLoader.hx
             
             var couldPlace : Bool = false;
             var placed : Array<luxe.Vector> = [];
@@ -118,6 +119,10 @@ class MapMap {
         mapmap[y][x] = options;
         
         return true;
+    }
+    
+    public function getPiece(x:Int, y:Int) {
+        return mapmap[y][x];
     }
     
     public function removePiece(x:Int, y:Int) {
