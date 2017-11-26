@@ -7,5 +7,9 @@
     ],
     "room2": [
         ["assets/rooms/room2a.json", "assets/rooms/room2c.json"]
+    ],
+    "room3": [
+        ["assets/rooms/room3a.json", "assets/rooms/room3c.json"],
+        ["assets/rooms/room3b.json", "assets/rooms/room3d.json"]
     ]
 }
