@@ -70,6 +70,7 @@ class Main extends luxe.Game {
         var parcel = new Parcel({
             textures: [
                 {id: "assets/tilesets/Yucatec.png"},
+                {id: "assets/tilesets/K'iche.png"},
                 {id: "assets/tilesets/Aztec.png"}
             ],
             shaders: [
