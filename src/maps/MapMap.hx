@@ -182,18 +182,15 @@ class MapMap {
         var current = getPiece(x, y);
         
         var offset = Math.ceil((map_height - 5) / 2);
-        if (current.left_wall) {
-            var side = getPiece(x-1, y);
-            if (side != null && side.right_wall) {
+        var side = getPiece(x-1, y);
+        if (side != null) {
+            if (current.left_wall && side.right_wall) {
                 current.tilemap.tile_at("0", 0, offset).id = 15;
                 current.tilemap.tile_at("0", 0, offset+1).id = 6;
                 current.tilemap.tile_at("0", 0, offset+2).id = 12;
                 current.tilemap.tile_at("0", 0, offset+3).id = 50;
                 current.tilemap.tile_at("0", 0, offset+4).id = 3;
                 current.tilemap.tile_at("0", 1, offset+3).id = 41;
-                Main.colliders.remove(current.left_collider);
-                if (current.left_collider != null) current.left_collider.destroy();
-                current.left_collider = null;
                 
                 side.tilemap.tile_at("0", map_width-1, offset).id = 13;
                 side.tilemap.tile_at("0", map_width-1, offset+1).id = 6;
@@ -201,24 +198,28 @@ class MapMap {
                 side.tilemap.tile_at("0", map_width-1, offset+3).id = 50;
                 side.tilemap.tile_at("0", map_width-1, offset+4).id = 1;
                 side.tilemap.tile_at("0", map_width-2, offset+3).id = 40;
+            }
+            
+            if (current.left_wall == side.right_wall) {
+                Main.colliders.remove(current.left_collider);
+                if (current.left_collider != null) current.left_collider.destroy();
+                current.left_collider = null;
+                    
                 Main.colliders.remove(side.right_collider);
                 if (side.right_collider != null) side.right_collider.destroy();
                 side.right_collider = null;
             }
         }
         
-        if (current.right_wall) {
-            var side = getPiece(x+1, y);
-            if (side != null && side.left_wall) {
+        var side = getPiece(x+1, y);
+        if (side != null) {
+            if (current.right_wall && side.left_wall) {
                 side.tilemap.tile_at("0", 0, offset).id = 15;
                 side.tilemap.tile_at("0", 0, offset+1).id = 6;
                 side.tilemap.tile_at("0", 0, offset+2).id = 12;
                 side.tilemap.tile_at("0", 0, offset+3).id = 50;
                 side.tilemap.tile_at("0", 0, offset+4).id = 3;
                 side.tilemap.tile_at("0", 1, offset+3).id = 41;
-                Main.colliders.remove(side.left_collider);
-                if (side.left_collider != null) side.left_collider.destroy();
-                side.left_collider = null;
                 
                 current.tilemap.tile_at("0", map_width-1, offset).id = 13;
                 current.tilemap.tile_at("0", map_width-1, offset+1).id = 6;
@@ -226,6 +227,13 @@ class MapMap {
                 current.tilemap.tile_at("0", map_width-1, offset+3).id = 50;
                 current.tilemap.tile_at("0", map_width-1, offset+4).id = 1;
                 current.tilemap.tile_at("0", map_width-2, offset+3).id = 40;
+            }
+            
+            if (current.right_wall == side.left_wall) {
+                Main.colliders.remove(side.left_collider);
+                if (side.left_collider != null) side.left_collider.destroy();
+                side.left_collider = null;
+                
                 Main.colliders.remove(current.right_collider);
                 if (current.right_collider != null) current.right_collider.destroy();
                 current.right_collider = null;
