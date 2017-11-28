@@ -36,7 +36,7 @@ class Main extends luxe.Game {
     public static var display_sprite : luxe.Sprite;
     
     public static var sprites : Array<Pseudo3D>;
-    public static var colliders : Array<differ.shapes.Shape>;
+    public static var colliders : Array<differ.shapes.Polygon>;
     public static var player : entities.Player;
     var stateMachine : States;
     var playState : PlayState;
@@ -205,5 +205,13 @@ class Main extends luxe.Game {
 
     override function update(delta:Float) {
         
+    }
+    
+    public static function solid(x:Float, y:Float) : Bool {
+        for (collider in colliders) {
+            var coll = differ.Collision.pointInPoly(x, y, collider);
+            if (coll) return true;
+        }
+        return false;
     }
 }

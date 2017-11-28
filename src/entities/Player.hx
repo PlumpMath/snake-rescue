@@ -9,13 +9,10 @@ import phoenix.Texture;
 import AssetsLoader;
 
 import luxe.Vector;
-import differ.Collision;
 
 class Player extends Pseudo3D {
     
-    public static var SNAKE_SPEED = 100;
-    var target_rot : Float;
-    var direction = {down:false, left:false, up:false, right:false};
+    public static var SNAKE_TIME = 0.15;
     
     override public function new(options : OptionalPseudo3DOptions){
         var jsonOptions : EntJSONOptions = Luxe.resources.json("assets/entities.json").asset.json.snake;
@@ -26,31 +23,32 @@ class Player extends Pseudo3D {
         
         super(options);
     }
-
+    
+    var direction = {down:false, left:false, up:false, right:false};
+    var target_rot : Float = 0;
+    var tweening = false;
     override function update(dt:Float){
-        // veryInefficient && iDontCare
-        target_rot =
-            if (direction.right && direction.down) 45 // down left
-            else if (direction.right && direction.up) 315 // down right
-            else if (direction.left && direction.down) 135 // up left
-            else if (direction.left && direction.up) 225 // up right
-            else if (direction.right && !direction.left) 0 // down
-            else if (direction.down && !direction.up) 90 // left
-            else if (direction.left && !direction.right) 180 // up
-            else if (direction.up && !direction.down) 270 // down
-            else target_rot; // if nothing is pressed, last direction
-        
-        if (direction.right && !direction.left) {
-            x += SNAKE_SPEED*dt;
-        }
-        if (direction.down && !direction.up) {
-            y += SNAKE_SPEED*dt;
-        }
-        if (direction.left && !direction.right) {
-            x -= SNAKE_SPEED*dt;
-        }
-        if (direction.up && !direction.down) {
-            y -= SNAKE_SPEED*dt;
+        if (!tweening) {
+            if (!Main.solid(x+32, y) && target_rot == 0) { // right
+                tweening = true;
+                luxe.tween.Actuate.tween(this, SNAKE_TIME, {x: x+32});
+                Luxe.timer.schedule(SNAKE_TIME, function(){ tweening = false; });
+                
+            } else if (!Main.solid(x, y+32) && target_rot == 90) { // down
+                tweening = true;
+                luxe.tween.Actuate.tween(this, SNAKE_TIME, {y: y+32});
+                Luxe.timer.schedule(SNAKE_TIME, function(){ tweening = false; });
+                
+            } else if (!Main.solid(x-32, y) && target_rot == 180) { // left
+                tweening = true;
+                luxe.tween.Actuate.tween(this, SNAKE_TIME, {x: x-32});
+                Luxe.timer.schedule(SNAKE_TIME, function(){ tweening = false; });
+                
+            } else if (!Main.solid(x, y-32) && target_rot == 270) { // up
+                tweening = true;
+                luxe.tween.Actuate.tween(this, SNAKE_TIME, {y: y-32});
+                Luxe.timer.schedule(SNAKE_TIME, function(){ tweening = false; });
+            }
         }
         
         if  (rotation_z != target_rot) { // smooth turning
@@ -62,11 +60,9 @@ class Player extends Pseudo3D {
                 diff += 360;
             }
             
-            rotation_z += diff/20;
+            rotation_z += diff/15;
             rotation_z = rotation_z % 360;
         }
-        
-        collide();
         
         Luxe.camera.center = pos.clone();
         Main.display_sprite.pos = pos.clone().subtractScalar(128);
@@ -75,36 +71,13 @@ class Player extends Pseudo3D {
     override function onkeydown(event : KeyEvent) {
         switch (event.keycode) {
             case Key.right:
-                direction.right = true;
+                target_rot = 0;
             case Key.down:
-                direction.down = true;
+                target_rot = 90;
             case Key.left:
-                direction.left = true;
+                target_rot = 180;
             case Key.up:
-                direction.up = true;
-        }
-    }
-    
-    override function onkeyup(event : KeyEvent) {
-        switch (event.keycode) {
-            case Key.right:
-                direction.right = false;
-            case Key.down:
-                direction.down = false;
-            case Key.left:
-                direction.left = false;
-            case Key.up:
-                direction.up = false;
-        }
-    }
-    
-    function collide() { // collision - very straightforward
-        for (spr in Main.colliders) {
-            var coll = Collision.shapeWithShape(collider, spr);
-            if (coll != null) {
-                x += coll.separationX;
-                y += coll.separationY;
-            }
+                target_rot = 270;
         }
     }
 

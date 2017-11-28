@@ -33,8 +33,11 @@ class PlayState extends State {
         
         Main.player = new entities.Player({
             name: "Player",
-            pos: new Vector(128, 128)
+            pos: new Vector(128, 160) // top left corner of center tile in top left room. mouthful
         });
+        
+        Main.player.x += 32/2; // center the player
+        Main.player.y += 32/2; // inside the tiles
         
         ahuizotl = Main.creators["az-ahuizotl"](cast {
             name: "ah",

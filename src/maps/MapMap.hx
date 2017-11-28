@@ -20,8 +20,8 @@ typedef MapJSONOptions = {
     tileset: String,
     collision: Array<{x:Float, y:Float, w:Float, h:Float, centered:Bool}>,
     left_wall: Bool, right_wall: Bool,
-    ?tilemap: Tilemap, ?colliders: Array<differ.shapes.Shape>,
-    ?left_collider: differ.shapes.Shape, ?right_collider: differ.shapes.Shape
+    ?tilemap: Tilemap, ?colliders: Array<differ.shapes.Polygon>,
+    ?left_collider: differ.shapes.Polygon, ?right_collider: differ.shapes.Polygon
 }
 
 class MapMap {

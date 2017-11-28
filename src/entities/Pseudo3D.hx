@@ -45,7 +45,7 @@ class Pseudo3D extends Entity {
     public var frames : Int;
     public var frame(default, set): Int;
     
-    public var collider : differ.shapes.Shape;
+    public var collider : differ.shapes.Polygon;
     
     override public function new(options : Pseudo3DOptions) {
         sprites = [];
