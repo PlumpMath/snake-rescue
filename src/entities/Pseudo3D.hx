@@ -7,7 +7,7 @@ import luxe.options.EntityOptions;
 import luxe.Vector;
 import luxe.Color;
 import differ.Collision;
-import differ.shapes.*;
+import utils.ParentedPolygon;
 
 typedef Pseudo3DOptions = {
     > EntityOptions,
@@ -45,7 +45,7 @@ class Pseudo3D extends Entity {
     public var frames : Int;
     public var frame(default, set): Int;
     
-    public var collider : differ.shapes.Polygon;
+    public var collider : utils.ParentedPolygon;
     
     override public function new(options : Pseudo3DOptions) {
         sprites = [];
@@ -88,7 +88,8 @@ class Pseudo3D extends Entity {
         }
         
         
-        collider = Polygon.rectangle(pos.x, pos.y, size.x, size.y);
+        collider = ParentedPolygon.rectangle(pos.x, pos.y, size.x, size.y);
+        collider.parent = this;
         collider.rotation = rotation_z;
     }
     

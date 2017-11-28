@@ -36,7 +36,7 @@ class Main extends luxe.Game {
     public static var display_sprite : luxe.Sprite;
     
     public static var sprites : Array<Pseudo3D>;
-    public static var colliders : Array<differ.shapes.Polygon>;
+    public static var colliders : Array<utils.ParentedPolygon>;
     public static var player : entities.Player;
     var stateMachine : States;
     var playState : PlayState;

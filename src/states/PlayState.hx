@@ -10,7 +10,7 @@ import luxe.Vector;
 import luxe.tilemaps.Tilemap;
 import luxe.tilemaps.Ortho;
 
-import differ.shapes.Polygon;
+import utils.ParentedPolygon;
 
 typedef MapJSONOptions = {
     entities: Array<{>EntJSONOptions, type:String, x:Float, y:Float}>,

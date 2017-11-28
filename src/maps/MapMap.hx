@@ -6,7 +6,7 @@ import AssetsLoader;
 
 import haxe.ds.Vector as HVector;
 
-import differ.shapes.Polygon;
+import utils.ParentedPolygon;
 
 typedef MapMapOptions = {
     x: Float, y: Float,
@@ -20,8 +20,8 @@ typedef MapJSONOptions = {
     tileset: String,
     collision: Array<{x:Float, y:Float, w:Float, h:Float, centered:Bool}>,
     left_wall: Bool, right_wall: Bool,
-    ?tilemap: Tilemap, ?colliders: Array<differ.shapes.Polygon>,
-    ?left_collider: differ.shapes.Polygon, ?right_collider: differ.shapes.Polygon
+    ?tilemap: Tilemap, ?colliders: Array<utils.ParentedPolygon>,
+    ?left_collider: utils.ParentedPolygon, ?right_collider: utils.ParentedPolygon
 }
 
 class MapMap {
@@ -124,7 +124,7 @@ class MapMap {
         tilemap.display({scale:1, batcher:Main.backgroundBatcher});
         var offset = Math.ceil((map_height - 5) / 2)+3;
         for (collider in options.collision) {
-            var coll = Polygon.rectangle(tilemap.pos.x + collider.x,
+            var coll = ParentedPolygon.rectangle(tilemap.pos.x + collider.x,
                                          tilemap.pos.y + collider.y,
                                          collider.w, collider.h,
                                          collider.centered);
@@ -132,10 +132,10 @@ class MapMap {
             options.colliders.push(coll); // what i explained above at the start of this function doesn't apply here???
         }
             
-        options.left_collider = Polygon.rectangle(tilemap.pos.x,
+        options.left_collider = ParentedPolygon.rectangle(tilemap.pos.x,
                                                   tilemap.pos.y + offset*32,
                                                   32, 32, false);
-        options.right_collider = Polygon.rectangle(tilemap.pos.x + (map_width-1)*32,
+        options.right_collider = ParentedPolygon.rectangle(tilemap.pos.x + (map_width-1)*32,
                                                   tilemap.pos.y + offset*32,
                                                   32, 32, false);
         Main.colliders.push(options.left_collider);
