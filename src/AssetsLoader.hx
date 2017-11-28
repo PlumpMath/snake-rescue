@@ -39,7 +39,7 @@ class AssetsLoader {
             var room : Dynamic = Reflect.getProperty(rooms, field);
             
             if (Std.is(room, String)) {
-                jsons.push({id: room});
+                jsons.push({id: "assets/rooms/" + room});
             } else {
                 try {
                     var room : Array<Array<String>> = cast room;
@@ -47,7 +47,7 @@ class AssetsLoader {
                         // safe cast doesn't work for some strange reason I can't find the solution of :'( (Cast type parameters must be Dynamic)
                     for (y in room) {
                         for (x in y) {
-                            jsons.push({id: x});
+                            jsons.push({id: "assets/rooms/" + x});
                         }
                     }
                 } catch(e:Dynamic) {

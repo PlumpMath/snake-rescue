@@ -95,7 +95,9 @@ class MapMap {
         if (x < 0 || y < 0 || x >= w || y >= h) return false;
         if (getPiece(x, y) != null) return false;
         
-        var options : MapJSONOptions = Reflect.copy(Luxe.resources.json(asset).asset.json);
+        var resource = Luxe.resources.json("assets/rooms/" + asset);
+        if (resource == null) return false;
+        var options : MapJSONOptions = Reflect.copy(resource.asset.json);
             // there can only be 1 reference alive to an instance!
             // So if I add the same room/piece in another place in the mapmap, the first one will disappear!
         options.colliders = [];

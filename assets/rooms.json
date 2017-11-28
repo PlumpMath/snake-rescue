@@ -1,15 +1,15 @@
 {
-    "level0": "assets/rooms/level0.json",
-    "room0": "assets/rooms/yucatec/room0.json",
+    "level0": "level0.json",
+    "room0": "yucatec/room0.json",
     "room1": [
-        ["assets/rooms/yucatec/room1a.json"],
-        ["assets/rooms/yucatec/room1b.json"]
+        ["yucatec/room1a.json"],
+        ["yucatec/room1b.json"]
     ],
     "room2": [
-        ["assets/rooms/yucatec/room2a.json", "assets/rooms/yucatec/room2c.json"]
+        ["yucatec/room2a.json", "yucatec/room2c.json"]
     ],
     "room3": [
-        ["assets/rooms/yucatec/room3a.json", "assets/rooms/yucatec/room3c.json"],
-        ["assets/rooms/yucatec/room3b.json", "assets/rooms/yucatec/room3d.json"]
+        ["yucatec/room3a.json", "yucatec/room3c.json"],
+        ["yucatec/room3b.json", "yucatec/room3d.json"]
     ]
 }
