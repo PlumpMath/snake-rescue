@@ -1,15 +1,16 @@
 {
     "level0": "level0.json",
-    "room0": "yucatec/room0.json",
-    "room1": [
+    "yu-room0": "yucatec/room0.json",
+    "yu-room1": [
         ["yucatec/room1a.json"],
         ["yucatec/room1b.json"]
     ],
-    "room2": [
+    "yu-room2": [
         ["yucatec/room2a.json", "yucatec/room2c.json"]
     ],
-    "room3": [
+    "yu-room3": [
         ["yucatec/room3a.json", "yucatec/room3c.json"],
         ["yucatec/room3b.json", "yucatec/room3d.json"]
     ]
+    "ki-room0": "k'iche/room0.json",
 }

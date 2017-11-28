@@ -64,11 +64,11 @@ class PlayState extends State {
             map_height : 9
         });
         
-        mapmap.addPiece("yucatec/room0.json", 0, 0);
-        mapmap.addRoom("room0", 0, 1);
-        mapmap.addRoom("room1", 1, 0);
-        mapmap.addRoom("room2", 0, 2);
-        mapmap.addRoom("room3", 2, 1);
+        mapmap.addRoom("yu-room0", 0, 0);
+        mapmap.addRoom("yu-room0", 0, 1);
+        mapmap.addRoom("yu-room1", 1, 0);
+        mapmap.addRoom("yu-room2", 0, 2);
+        mapmap.addRoom("yu-room3", 2, 1);
         
         // for (entity in MapJSONa.entities) {
             // var spr = Main.creators[entity.type](cast {
