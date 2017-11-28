@@ -12,5 +12,5 @@
         ["yucatec/room3a.json", "yucatec/room3c.json"],
         ["yucatec/room3b.json", "yucatec/room3d.json"]
     ]
-    "ki-room0": "k'iche/room0.json",
+    "ki-room0": "k'iche/room0.json"
 }
