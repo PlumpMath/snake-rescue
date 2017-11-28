@@ -20,7 +20,7 @@ void main() {
         alpha += texture2D(tex0, tcoord + vec2(pixelSize.x, pixelSize.y)).a;
         alpha += texture2D(tex0, tcoord + vec2(0, pixelSize.y)).a;
         alpha += texture2D(tex0, tcoord + vec2(-pixelSize.x, pixelSize.y)).a;
-        alpha = ceil(alpha/8);
+        alpha = ceil(alpha/8.0);
         texcolor = vec4(0.0, 0.0, 0.0, alpha);
     }
     
