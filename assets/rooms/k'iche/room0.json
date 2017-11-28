@@ -12,7 +12,7 @@
         [10, 2, 2, 2, 2, 2, 2, 2,11]
     ],
     "left_wall": true, "right_wall": true,
-    "tileset": "Yucatec",
+    "tileset": "K'iche",
     "collision": [
         {"x": 0,   "y": 0,   "w": 288, "h": 96,  "centered": false},
         {"x": 0,   "y": 96,  "w": 32,  "h": 64,  "centered": false},
