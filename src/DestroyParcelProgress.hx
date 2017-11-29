@@ -63,16 +63,11 @@ class DestroyParcelProgress extends ParcelProgress {
         options.parcel.on(ParcelEvent.complete, oncomplete);
 	}
     
-    var oldamount : Int = 32;
-    
 	override public function onprogress(_state:ParcelChange) {
 		var amount = Math.floor(_state.index / _state.total * 16);
         if (secondHalf) amount += 16;
-        if (amount < oldamount) {
-            oldamount = amount;
-            block.pos.y = 256/32 * amount;
-            Luxe.camera.shake(1);
-        }
+        block.pos.y = amount * 256/32;
+        Luxe.camera.shake(1);
         Log.log('loaded \'${_state.id}\'');
 	}
     
