@@ -55,7 +55,19 @@ class Bullet extends Pseudo3D {
         x += move.x;
         y += move.y;
         
-        if (pos.getForce() > 512) this.destroy();
+        if (pos.getForce() > 512) {
+            this.destroy();
+        } else {
+            var collision = differ.Collision.shapeWithShape(collider, Main.player.collider);
+            if (collision != null) {
+                Main.player.events.fire("player.attacked", {by:"bullet"});
+                this.destroy();
+            } else {
+                var collision = differ.Collision.shapeWithShapes(collider, cast Main.colliders);
+                if (collision.length > 0)
+                    this.destroy();
+            }
+        }
     }
 
 }

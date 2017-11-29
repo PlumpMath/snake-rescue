@@ -107,7 +107,10 @@ class Pseudo3D extends Entity {
     
     function set_x(val) {
         pos.x = val;
-        if (collider!=null) collider.x = val;
+        if (collider!=null) {
+            collider.x = val;
+            if (parent != null) collider.x += parent.pos.x; // TODO: make it so it traverses all parents. for now it's not necessary
+        }
         return x = val;
     }
     
@@ -118,7 +121,10 @@ class Pseudo3D extends Entity {
             n++;
         }
         pos.y = val;
-        if (collider!=null) collider.y = val;
+        if (collider!=null) {
+            collider.y = val;
+            if (parent != null) collider.y += parent.pos.y; // TODO: see set_x() (just above this function ;) )
+        }
         return y = val;
     }
     
