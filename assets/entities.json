@@ -5,25 +5,25 @@
         "w": 27, "d": 7,
         "growing": true
     },
-    "yu-shooter": {
+    "yu_shooter": {
         "texture": "assets/models/yucatec/Shooter.png",
         "h": 19,
         "w": 24, "d": 24,
         "growing": true
     },
-    "az-altar": {
+    "az_altar": {
         "texture": "assets/models/aztec/Altar.png",
         "h": 12,
         "w": 32, "d": 32,
         "growing": true
     },
-    "az-head": {
+    "az_head": {
         "texture": "assets/models/aztec/Head.png",
         "h": 37,
         "w": 32, "d": 32,
         "growing": true
     },
-    "az-ahuizotl": {
+    "az_ahuizotl": {
         "texture": "assets/models/aztec/Ahuizotl.png",
         "frames": 4,
         "h": 9,

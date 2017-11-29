@@ -39,7 +39,7 @@ class PlayState extends State {
         Main.player.x += 32/2; // center the player
         Main.player.y += 32/2; // inside the tiles
         
-        shooter = Main.creators["yu-shooter"](cast {
+        shooter = Main.creators["yu_shooter"](cast {
             name: "ah",
             pos: new Vector(200, 200)
         });
@@ -60,9 +60,9 @@ class PlayState extends State {
             map_height : 9
         });
         
-        mapmap.addRoom("az-room0", 0, 0);
-        mapmap.addRoom("az-room1", 1, 0);
-        mapmap.addRoom("az-room0", 2, 1);
+        mapmap.addRoom("az_room0", 0, 0);
+        mapmap.addRoom("az_room1", 1, 0);
+        mapmap.addRoom("az_room0", 2, 1);
         
         // for (entity in MapJSONa.entities) {
             // var spr = Main.creators[entity.type](cast {

@@ -1,29 +1,29 @@
 {
     "level0": "level0.json",
-    "yu-room0": "yucatec/room0.json",
-    "yu-room1": [
+    "yu_room0": "yucatec/room0.json",
+    "yu_room1": [
         ["yucatec/room1a.json"],
         ["yucatec/room1b.json"]
     ],
-    "yu-room2": [
+    "yu_room2": [
         ["yucatec/room2a.json", "yucatec/room2c.json"]
     ],
-    "yu-room3": [
+    "yu_room3": [
         ["yucatec/room3a.json", "yucatec/room3c.json"],
         ["yucatec/room3b.json", "yucatec/room3d.json"]
     ],
-    "ki-room0": "k'iche/room0.json",
-    "ki-room1": [
+    "ki_room0": "k'iche/room0.json",
+    "ki_room1": [
         ["k'iche/room1a.json"],
         ["k'iche/room1b.json"],
         ["k'iche/room1c.json"]
     ],
-    "ki-room2": [
+    "ki_room2": [
         ["k'iche/room2a.json"],
         ["k'iche/room2b.json"]
     ],
-    "az-room0": "aztec/room0.json",
-    "az-room1": [
+    "az_room0": "aztec/room0.json",
+    "az_room1": [
         ["aztec/room1a.json", "aztec/room1d.json", "aztec/room1g.json"],
         ["aztec/room1b.json", null               , "aztec/room1b.json"],
         ["aztec/room1c.json", "aztec/room1d.json", "aztec/room1i.json"]
