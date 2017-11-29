@@ -22,7 +22,7 @@ typedef MapJSONOptions = {
 
 class PlayState extends State {
     
-    var ahuizotl : entities.Pseudo3D;
+    var shooter : entities.Pseudo3D;
     
     override public function new(options : StateOptions){
         super(options);
@@ -39,19 +39,15 @@ class PlayState extends State {
         Main.player.x += 32/2; // center the player
         Main.player.y += 32/2; // inside the tiles
         
-        ahuizotl = Main.creators["az-ahuizotl"](cast {
+        shooter = Main.creators["yu-shooter"](cast {
             name: "ah",
             pos: new Vector(200, 200)
         });
     }
     
-    var total_time: Float = 0;
     override function update(delta:Float) {
-        if(ahuizotl == null)return;
-        total_time += delta/0.1;
-        total_time = total_time%4;
-        ahuizotl.frame = Math.floor(total_time);
-        ahuizotl.rotation_z += 20*delta;
+        if(shooter == null)return;
+        shooter.rotation_z += 20*delta;
     }
     
     function createBackground() {

@@ -5,6 +5,12 @@
         "w": 27, "d": 7,
         "growing": true
     },
+    "yu-shooter": {
+        "texture": "assets/models/yucatec/Shooter.png",
+        "h": 19,
+        "w": 24, "d": 24,
+        "growing": true
+    },
     "az-altar": {
         "texture": "assets/models/aztec/Altar.png",
         "h": 12,
