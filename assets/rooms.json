@@ -21,5 +21,11 @@
     "ki-room2": [
         ["k'iche/room2a.json"],
         ["k'iche/room2b.json"]
+    ],
+    "az-room0": "aztec/room0.json",
+    "az-room1": [
+        ["aztec/room1a.json", "aztec/room1d.json", "aztec/room1g.json"],
+        ["aztec/room1b.json", null               , "aztec/room1b.json"],
+        ["aztec/room1c.json", "aztec/room1d.json", "aztec/room1i.json"]
     ]
 }

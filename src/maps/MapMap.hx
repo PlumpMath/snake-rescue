@@ -64,19 +64,21 @@ class MapMap {
         if (Std.is(room, String)) {
             return addPiece(room, x, y);
         } else {
-            var room : Array<Array<String>> = cast room; // it can't be any other thing. It has already been checked in AssetsLoader.hx
+            var room : Array<Array<Null<String>>> = cast room; // it can't be any other thing. It has already been checked in AssetsLoader.hx
             
             var couldPlace : Bool = false;
             var placed : Array<luxe.Vector> = [];
             for (yy in 0...room.length) {
                 for (xx in 0...room[yy].length) {
-                    var nx = x+xx;
-                    var ny = y+yy;
-                    couldPlace = addPiece(room[yy][xx], nx, ny);
-                    
-                    if (couldPlace) {
-                        placed.push(new luxe.Vector(nx, ny));
-                    } else { break; }
+                    if (room[yy][xx] != null) {
+                        var nx = x+xx;
+                        var ny = y+yy;
+                        couldPlace = addPiece(room[yy][xx], nx, ny);
+                        
+                        if (couldPlace) {
+                            placed.push(new luxe.Vector(nx, ny));
+                        } else { break; }
+                    }
                 }
                 if (!couldPlace) break;
             }

@@ -42,12 +42,13 @@ class AssetsLoader {
                 jsons.push({id: "assets/rooms/" + room});
             } else {
                 try {
-                    var room : Array<Array<String>> = cast room;
+                    var room : Array<Array<Null<String>>> = cast room;
                         // bug: if the unsafe cast doesn't work, it silently crashes the game
                         // safe cast doesn't work for some strange reason I can't find the solution of :'( (Cast type parameters must be Dynamic)
                     for (y in room) {
                         for (x in y) {
-                            jsons.push({id: "assets/rooms/" + x});
+                            if (x != null)
+                                jsons.push({id: "assets/rooms/" + x});
                         }
                     }
                 } catch(e:Dynamic) {
