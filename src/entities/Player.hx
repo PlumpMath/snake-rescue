@@ -1,7 +1,5 @@
 package entities;
 
-using utils.ForceAngle;
-
 import entities.Pseudo3D;
 
 import luxe.Input;

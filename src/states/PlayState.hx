@@ -39,15 +39,14 @@ class PlayState extends State {
         Main.player.x += 32/2; // center the player
         Main.player.y += 32/2; // inside the tiles
         
-        shooter = Main.creators["yu_shooter"](cast {
+        shooter = new entities.yu.Shooter({
             name: "ah",
             pos: new Vector(200, 200)
         });
     }
     
     override function update(delta:Float) {
-        if(shooter == null)return;
-        shooter.rotation_z += 20*delta;
+        
     }
     
     function createBackground() {

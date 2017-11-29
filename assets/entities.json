@@ -11,6 +11,12 @@
         "w": 24, "d": 24,
         "growing": true
     },
+    "yu_bullet": {
+        "texture": "assets/models/yucatec/Bullet.png",
+        "h": 4,
+        "w": 6, "d": 4,
+        "growing": false
+    },
     "az_altar": {
         "texture": "assets/models/aztec/Altar.png",
         "h": 12,
