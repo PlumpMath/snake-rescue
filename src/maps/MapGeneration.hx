@@ -13,7 +13,7 @@ class MapGeneration {
         });
         
         mapmap.addRoom("yu_room0", 0, 0);
-        mapmap.addRoom("yu_room0", 9, 9);
+        mapmap.addRoom("yu_room0", 4, 4);
         for (y in 0...mapmap.h) {
             if (y < mapmap.h-1) {
                 var placedvert;
