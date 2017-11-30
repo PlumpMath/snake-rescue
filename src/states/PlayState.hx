@@ -49,7 +49,7 @@ class PlayState extends State {
     }
     
     function createBackground() {
-        mapmap = maps.MapGeneration.createKicheMap();
+        mapmap = maps.MapGeneration.createAztecMap();
         
         // for (entity in MapJSONa.entities) {
             // var spr = Main.creators[entity.type](cast {
