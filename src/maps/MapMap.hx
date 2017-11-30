@@ -93,7 +93,7 @@ class MapMap {
         }
     }
     
-    public function addPiece(asset:String, x:Int, y:Int) : Bool {
+    public function addPiece(asset:String, x:Int, y:Int, ?ops:Null<Dynamic>) : Bool {
         if (x < 0 || y < 0 || x >= w || y >= h) return false;
         if (getPiece(x, y) != null) return false;
         
@@ -102,6 +102,13 @@ class MapMap {
         var options : MapJSONOptions = Reflect.copy(resource.asset.json);
             // there can only be 1 reference alive to an instance!
             // So if I add the same room/piece in another place in the mapmap, the first one will disappear!
+        if (ops != null && Reflect.isObject(ops)) {
+            var fields = Reflect.fields(ops);
+            for (field in fields) {
+                var op : Dynamic = Reflect.getProperty(ops, field);
+                Reflect.setProperty(options, field, op);
+            }
+        }
         options.colliders = [];
         
         var tilemap = new Tilemap({
