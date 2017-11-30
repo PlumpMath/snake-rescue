@@ -11,7 +11,7 @@
         [ 9,49,50,50,50,50,50,51, 7],
         [10, 2, 2, 2, 2, 2, 2, 2,11]
     ],
-    "left_wall": false, "right_wall": false,
+    "left_wall": true, "right_wall": true,
     "tileset": "K'iche",
     "collision": [
         {"x": 0,   "y": 0,   "w": 32,  "h": 160, "centered": false},
