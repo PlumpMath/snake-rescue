@@ -80,7 +80,8 @@ class Main extends luxe.Game {
             ],
             jsons: [
                 {id: "assets/entities.json"},
-                {id: "assets/rooms.json"}
+                {id: "assets/rooms.json"},
+                {id: "assets/sfx.json"},
             ]
         });
         

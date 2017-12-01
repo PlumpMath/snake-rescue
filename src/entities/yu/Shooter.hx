@@ -21,6 +21,7 @@ class Shooter extends Pseudo3D {
         loop = Luxe.timer.schedule(1, function() {
             var dir = pos.clone().subtract(Main.player.pos);
             if (dir.getForce() < 100) {
+                Luxe.audio.play(Luxe.resources.audio("assets/sfx/altar_rotation.wav").source);
                 luxe.tween.Actuate.tween(this, 0.25, {rotation_z: dir.getAngle()}).smartRotation(true);
                 Luxe.timer.schedule(0.25, function() {
                     if (!this.destroyed) new Bullet({

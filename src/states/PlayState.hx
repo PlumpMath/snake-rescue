@@ -52,22 +52,34 @@ class PlayState extends State {
     function createBackground() {
         mapmap = maps.MapGeneration.createYucatecMap();
         
-        var n = Math.floor(Math.random()*(50-25+0.99))+25;
-        for (x in 0...n) {
-            var x;
-            var y;
-            do {
-                x = Math.floor(Math.random()*(mapmap.w*9+1));
-                y = Math.floor(Math.random()*(mapmap.h*9+1));
-                x = x*32+16;
-                y = y*32+16;
-            } while(Main.solid(x, y, 16));
-            
-            var shooter = new entities.yu.Shooter({
-                pos: new Vector(x, y)
-            });
-            Main.sprites.push(shooter);
-            Main.colliders.push(shooter.collider);
+        for (x in 0...100) {
+            var x : Float;
+            var y : Float;
+            var enemy : entities.Pseudo3D;
+            if (Math.floor(Math.random()*2.99) > 0) {
+                do {
+                    x = Math.floor(Math.random()*(mapmap.w*9+1));
+                    y = Math.floor(Math.random()*(mapmap.h*9+1));
+                    x = x*32+16;
+                    y = y*32+16;
+                } while((x < 288 && y < 288) || Main.solid(x, y, 16));
+                
+                enemy = new entities.yu.Shooter({
+                    pos: new Vector(x, y),
+                    rotation_z: Math.floor(Math.random()*3.99)*90
+                });
+            } else {
+                do {
+                    x = Math.random()*(mapmap.w*9*32);
+                    y = Math.random()*(mapmap.h*9*32);
+                } while((x < 288 && y < 288) || Main.solid(x, y-16, 48));
+                
+                enemy = new entities.yu.HuayChivo({
+                    pos: new Vector(x, y)
+                });
+            }
+            Main.sprites.push(enemy);
+            Main.colliders.push(enemy.collider);
         }
     }
     

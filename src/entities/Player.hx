@@ -27,7 +27,7 @@ class Player extends Pseudo3D {
         initialx = options.pos.x;
         initialy = options.pos.y;
         
-        events.listen("player.attacked", function(_){ this.reset(); });
+        events.listen("player.attacked", function(_){ cast(Luxe.core.game, Main).playState.mapreset(); });
     }
     
     var direction = {down:false, left:false, up:false, right:false};
@@ -38,7 +38,10 @@ class Player extends Pseudo3D {
             if (target_rot == 0) { // right
                 if (Main.solid(x+32, y)) {
                     var coll = Main.colliderAt(x+32, y);
-                    if (coll != null && coll.parent != null && Type.getClass(coll.parent) == entities.yu.Shooter) coll.parent.destroy();
+                    if (coll != null && coll.parent != null && Type.getClass(coll.parent) == entities.yu.Shooter) {
+                        coll.parent.destroy();
+                        Luxe.audio.play(Luxe.resources.audio("assets/sfx/altar_destroyed.wav").source);
+                    }
                 } else {
                     tweening = true;
                     luxe.tween.Actuate.tween(this, SNAKE_TIME, {x: x+32});
@@ -47,7 +50,10 @@ class Player extends Pseudo3D {
             } else if (target_rot == 90) { // down
                 if (Main.solid(x, y+32)) {
                     var coll = Main.colliderAt(x, y+32);
-                    if (coll != null && coll.parent != null && Type.getClass(coll.parent) == entities.yu.Shooter) coll.parent.destroy();
+                    if (coll != null && coll.parent != null && Type.getClass(coll.parent) == entities.yu.Shooter) {
+                        coll.parent.destroy();
+                        Luxe.audio.play(Luxe.resources.audio("assets/sfx/altar_destroyed.wav").source);
+                    }
                 } else {
                     tweening = true;
                     luxe.tween.Actuate.tween(this, SNAKE_TIME, {y: y+32});
@@ -56,7 +62,10 @@ class Player extends Pseudo3D {
             } else if (target_rot == 180) { // left
                 if (Main.solid(x-32, y)) {
                     var coll = Main.colliderAt(x-32, y);
-                    if (coll != null && coll.parent != null && Type.getClass(coll.parent) == entities.yu.Shooter) coll.parent.destroy();
+                    if (coll != null && coll.parent != null && Type.getClass(coll.parent) == entities.yu.Shooter) {
+                        coll.parent.destroy();
+                        Luxe.audio.play(Luxe.resources.audio("assets/sfx/altar_destroyed.wav").source);
+                    }
                 } else {
                     tweening = true;
                     luxe.tween.Actuate.tween(this, SNAKE_TIME, {x: x-32});
@@ -65,7 +74,10 @@ class Player extends Pseudo3D {
             } else if (target_rot == 270) { // up
                 if (Main.solid(x, y-32)) {
                     var coll = Main.colliderAt(x, y-32);
-                    if (coll != null && coll.parent != null && Type.getClass(coll.parent) == entities.yu.Shooter) coll.parent.destroy();
+                    if (coll != null && coll.parent != null && Type.getClass(coll.parent) == entities.yu.Shooter) {
+                        coll.parent.destroy();
+                        Luxe.audio.play(Luxe.resources.audio("assets/sfx/altar_destroyed.wav").source);
+                    }
                 } else {
                     tweening = true;
                     luxe.tween.Actuate.tween(this, SNAKE_TIME, {y: y-32});

@@ -30,6 +30,13 @@ class AssetsLoader {
             textures.push({id: entity.texture});
         }
         
+        var sounds = [];
+        var sfxs : Array<String> = Luxe.resources.json("assets/sfx.json").asset.json;
+        
+        for (sfx in sfxs) {
+            sounds.push({id: "assets/sfx/"+sfx, is_stream:false});
+        }
+        
         var jsons = [];
         var rooms: Dynamic = Luxe.resources.json("assets/rooms.json").asset.json;
         
@@ -60,7 +67,7 @@ class AssetsLoader {
         var failedString = failed.join(",");
         if (failed.length > 0) throw "invalid format in:\n" + failedString.substr(0,100) + (if (failedString.length > 100) "\n(check console)" else "");
         
-        var parcel = new Parcel({textures: textures, jsons: jsons});
+        var parcel = new Parcel({textures: textures, jsons: jsons, sounds: sounds});
         
         new DestroyParcelProgress({
             parcel: parcel,
