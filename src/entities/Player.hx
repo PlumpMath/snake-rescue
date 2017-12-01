@@ -20,6 +20,8 @@ class Player extends Pseudo3D {
         options.texture = Luxe.resources.texture(jsonOptions.texture);
         
         super(options);
+        
+        events.listen("player.attacked", function(_){ this.destroy(); });
     }
     
     var direction = {down:false, left:false, up:false, right:false};

@@ -49,18 +49,19 @@ class PlayState extends State {
     }
     
     function createBackground() {
-        mapmap = maps.MapGeneration.createAztecMap();
+        mapmap = maps.MapGeneration.createYucatecMap();
         
-        // for (entity in MapJSONa.entities) {
-            // var spr = Main.creators[entity.type](cast {
-                // name: entity.name,
-                // pos: new Vector(entity.x, entity.y),
-                // rotation_z: entity.rotation_z
-            // });
-            
-            // Main.sprites.push(spr);
-            // Main.colliders.push(spr.collider);
-        // }
+        for (x in 0...(Math.floor(Math.random()*(50-25+0.99))+25)) {
+            var x;
+            var y;
+            do {
+                x = Math.random()*(mapmap.w*9*32);
+                y = Math.random()*(mapmap.w*9*32);
+            } while(Main.solid(x, y));
+            Main.sprites.push(new entities.yu.Shooter({
+                pos: new Vector(x, y)
+            }));
+        }
     }
     
     override public function onkeydown(event:KeyEvent) {
@@ -68,6 +69,9 @@ class PlayState extends State {
             mapmap.destroy();
             
             createBackground();
+            for (sprite in Main.sprites) {
+                sprite.destroy();
+            }
             
             Main.player.x = 128 + 32/2; // center the player
             Main.player.y = 160 + 32/2; // inside the tiles
