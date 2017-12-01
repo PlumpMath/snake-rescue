@@ -17,6 +17,13 @@
         "w": 6, "d": 4,
         "growing": false
     },
+	"yu_huay_chivo": {
+		"texture": "assets/models/yucatec/Huay_Chivo.png",
+		"frames": 6,
+		"h": 15,
+		"w": 24, "d": 4,
+		"growing": true
+	},
     "az_altar": {
         "texture": "assets/models/aztec/Altar.png",
         "h": 12,

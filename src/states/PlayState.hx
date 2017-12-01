@@ -22,7 +22,7 @@ typedef MapJSONOptions = {
 
 class PlayState extends State {
     
-    var shooter : entities.Pseudo3D;
+    var huay_chivo : entities.Pseudo3D;
     var mapmap : maps.MapMap;
     
     override public function init(){
@@ -38,14 +38,18 @@ class PlayState extends State {
         Main.player.x += 32/2; // center the player
         Main.player.y += 32/2; // inside the tiles
         
-        shooter = new entities.yu.Shooter({
+        huay_chivo = Main.creators["yu_huay_chivo"]({
             name: "ah",
             pos: new Vector(200, 200)
         });
     }
     
+	var total_time:Float = 0;
     override function update(delta:Float) {
-        
+        if(huay_chivo==null)return;
+		total_time+=delta/0.25;
+		huay_chivo.frame = Math.floor(total_time);
+		huay_chivo.rotation_z += 20*delta;
     }
     
     function createBackground() {
