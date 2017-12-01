@@ -12,6 +12,9 @@ class Player extends Pseudo3D {
     
     public static var SNAKE_TIME = 0.15;
     
+    var initialx : Float;
+    var initialy : Float;
+    
     override public function new(options : OptionalPseudo3DOptions){
         var jsonOptions : EntJSONOptions = Luxe.resources.json("assets/entities.json").asset.json.snake;
         options.height = jsonOptions.h;
@@ -21,7 +24,10 @@ class Player extends Pseudo3D {
         
         super(options);
         
-        events.listen("player.attacked", function(_){ this.destroy(); });
+        initialx = options.pos.x;
+        initialy = options.pos.y;
+        
+        events.listen("player.attacked", function(_){ this.reset(); });
     }
     
     var direction = {down:false, left:false, up:false, right:false};
@@ -29,40 +35,46 @@ class Player extends Pseudo3D {
     var tweening = false;
     override function update(dt:Float){
         if (!tweening) {
-            if (!Main.solid(x+32, y) && target_rot == 0) { // right
-                tweening = true;
-                luxe.tween.Actuate.tween(this, SNAKE_TIME, {x: x+32});
-                Luxe.timer.schedule(SNAKE_TIME, function(){ tweening = false; });
-                
-            } else if (!Main.solid(x, y+32) && target_rot == 90) { // down
-                tweening = true;
-                luxe.tween.Actuate.tween(this, SNAKE_TIME, {y: y+32});
-                Luxe.timer.schedule(SNAKE_TIME, function(){ tweening = false; });
-                
-            } else if (!Main.solid(x-32, y) && target_rot == 180) { // left
-                tweening = true;
-                luxe.tween.Actuate.tween(this, SNAKE_TIME, {x: x-32});
-                Luxe.timer.schedule(SNAKE_TIME, function(){ tweening = false; });
-                
-            } else if (!Main.solid(x, y-32) && target_rot == 270) { // up
-                tweening = true;
-                luxe.tween.Actuate.tween(this, SNAKE_TIME, {y: y-32});
-                Luxe.timer.schedule(SNAKE_TIME, function(){ tweening = false; });
+            if (target_rot == 0) { // right
+                if (Main.solid(x+32, y)) {
+                    var coll = Main.colliderAt(x+32, y);
+                    if (coll != null && coll.parent != null) coll.parent.destroy();
+                } else {
+                    tweening = true;
+                    luxe.tween.Actuate.tween(this, SNAKE_TIME, {x: x+32});
+                    Luxe.timer.schedule(SNAKE_TIME, function(){ tweening = false; });
+                }
+            } else if (target_rot == 90) { // down
+                if (Main.solid(x, y+32)) {
+                    var coll = Main.colliderAt(x, y+32);
+                    if (coll != null && coll.parent != null) coll.parent.destroy();
+                } else {
+                    tweening = true;
+                    luxe.tween.Actuate.tween(this, SNAKE_TIME, {y: y+32});
+                    Luxe.timer.schedule(SNAKE_TIME, function(){ tweening = false; });
+                }
+            } else if (target_rot == 180) { // left
+                if (Main.solid(x-32, y)) {
+                    var coll = Main.colliderAt(x-32, y);
+                    if (coll != null && coll.parent != null) coll.parent.destroy();
+                } else {
+                    tweening = true;
+                    luxe.tween.Actuate.tween(this, SNAKE_TIME, {x: x-32});
+                    Luxe.timer.schedule(SNAKE_TIME, function(){ tweening = false; });
+                }
+            } else if (target_rot == 270) { // up
+                if (Main.solid(x, y-32)) {
+                    var coll = Main.colliderAt(x, y-32);
+                    if (coll != null && coll.parent != null) coll.parent.destroy();
+                } else {
+                    tweening = true;
+                    luxe.tween.Actuate.tween(this, SNAKE_TIME, {y: y-32});
+                    Luxe.timer.schedule(SNAKE_TIME, function(){ tweening = false; });
+                }
             }
         }
         
-        if  (rotation_z != target_rot) { // smooth turning
-            var diff = target_rot-(rotation_z % 360);
-            
-            if (diff > 180) {
-                diff -= 360;
-            } else if (diff < -180) {
-                diff += 360;
-            }
-            
-            rotation_z += diff/15;
-            rotation_z = rotation_z % 360;
-        }
+        luxe.tween.Actuate.tween(this, 0.1, {rotation_z: target_rot}).smartRotation(true);
         
         Luxe.camera.center = pos.clone();
         Main.display_sprite.pos = pos.clone().subtractScalar(128);
@@ -79,6 +91,13 @@ class Player extends Pseudo3D {
             case Key.up:
                 target_rot = 270;
         }
+    }
+    
+    public function reset() {
+        luxe.tween.Actuate.stop(this);
+        x = initialx + 16;
+        y = initialy + 16;
+        target_rot = 0;
     }
 
 }

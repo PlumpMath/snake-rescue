@@ -44,12 +44,12 @@ class PlayState extends State {
         });
     }
     
-	var total_time:Float = 0;
+    var total_time:Float = 0;
     override function update(delta:Float) {
         if(huay_chivo==null)return;
-		total_time+=delta/0.25;
-		huay_chivo.frame = Math.floor(total_time);
-		huay_chivo.rotation_z += 20*delta;
+        total_time+=delta/0.25;
+        huay_chivo.frame = Math.floor(total_time);
+        huay_chivo.rotation_z += 20*delta;
     }
     
     function createBackground() {
@@ -77,13 +77,14 @@ class PlayState extends State {
         if (event.keycode == Key.key_r) {
             mapmap.destroy();
             
-            createBackground();
+            Main.colliders = [];
             for (sprite in Main.sprites) {
                 sprite.destroy();
             }
+            Main.sprites = [];
+            createBackground();
             
-            Main.player.x = 128 + 32/2; // center the player
-            Main.player.y = 160 + 32/2; // inside the tiles
+            Main.player.reset();
         }
     }
 

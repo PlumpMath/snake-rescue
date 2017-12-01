@@ -94,7 +94,10 @@ class Pseudo3D extends Entity {
     }
     
     override public function ondestroy() {
+        Main.colliders.remove(collider);
+        collider.parent = null;
         collider.destroy();
+        collider = null;
     }
     
     function set_rotation_z(val) {

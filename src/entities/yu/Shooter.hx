@@ -8,6 +8,7 @@ import luxe.Vector;
 
 class Shooter extends Pseudo3D {
     
+    var loop : snow.api.Timer;
     override public function new(options : OptionalPseudo3DOptions) {
         var jsonOptions : EntJSONOptions = Luxe.resources.json("assets/entities.json").asset.json.yu_shooter;
         options.height = jsonOptions.h;
@@ -17,19 +18,25 @@ class Shooter extends Pseudo3D {
         
         super(options);
         
-        Luxe.timer.schedule(1, function() {
+        loop = Luxe.timer.schedule(1, function() {
             var dir = pos.clone().subtract(Main.player.pos);
             if (dir.getForce() < 100) {
-                luxe.tween.Actuate.tween(this, 0.25, {rotation_z: dir.getAngle()});
+                luxe.tween.Actuate.tween(this, 0.25, {rotation_z: dir.getAngle()}).smartRotation(true);
                 Luxe.timer.schedule(0.25, function() {
-                    new Bullet({
+                    if (!this.destroyed) new Bullet({
                         name: "bull"+Math.random(),
                         rotation_z: dir.getAngle(),
-                        parent: this
+                        pos: pos.clone()
                     });
                 });
             }
         }, true);
+    }
+    
+    override function ondestroy() {
+        super.ondestroy();
+        loop.stop();
+        luxe.tween.Actuate.stop(this);
     }
     
     override function update(dt:Float) {
@@ -40,6 +47,7 @@ class Shooter extends Pseudo3D {
 
 class Bullet extends Pseudo3D {
     
+    var initialpos : Vector;
     override public function new(options : OptionalPseudo3DOptions) {
         var jsonOptions : EntJSONOptions = Luxe.resources.json("assets/entities.json").asset.json.yu_bullet;
         options.height = jsonOptions.h;
@@ -48,6 +56,12 @@ class Bullet extends Pseudo3D {
         options.texture = Luxe.resources.texture(jsonOptions.texture);
         
         super(options);
+        
+        initialpos = options.pos;
+        
+        var move = (new Vector(16, rotation_z)).fromForceAngle();
+        x += move.x;
+        y += move.y;
     }
     
     override function update(dt:Float) {
@@ -55,7 +69,7 @@ class Bullet extends Pseudo3D {
         x += move.x;
         y += move.y;
         
-        if (pos.getForce() > 512) {
+        if (pos.clone().subtract(initialpos).getForce() > 512) {
             this.destroy();
         } else {
             var collision = differ.Collision.shapeWithShape(collider, Main.player.collider);
