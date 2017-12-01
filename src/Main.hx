@@ -207,9 +207,16 @@ class Main extends luxe.Game {
         
     }
     
-    public static function solid(x:Float, y:Float) : Bool {
+    public static function solid(x:Float, y:Float, ?radius:Null<Float>) : Bool {
+        var poly:Null<differ.shapes.Circle> = null;
+        if(radius != null) {
+            poly = new differ.shapes.Circle(x, y, radius);
+        }
         for (collider in colliders) {
-            var coll = differ.Collision.pointInPoly(x, y, collider);
+            var coll;
+            if (poly != null) coll = (differ.Collision.shapeWithShape(poly, collider) != null);
+            else coll = differ.Collision.pointInPoly(x, y, collider);
+            
             if (coll) return true;
         }
         return false;

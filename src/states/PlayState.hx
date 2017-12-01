@@ -55,12 +55,17 @@ class PlayState extends State {
             var x;
             var y;
             do {
-                x = Math.random()*(mapmap.w*9*32);
-                y = Math.random()*(mapmap.w*9*32);
-            } while(Main.solid(x, y));
-            Main.sprites.push(new entities.yu.Shooter({
+                x = Math.floor(Math.random()*(mapmap.w*9+1));
+                y = Math.floor(Math.random()*(mapmap.h*9+1));
+                x = x*32+16;
+                y = y*32+16;
+            } while(Main.solid(x, y, 16));
+            
+            var shooter = new entities.yu.Shooter({
                 pos: new Vector(x, y)
-            }));
+            });
+            Main.sprites.push(shooter);
+            Main.colliders.push(shooter.collider);
         }
     }
     
