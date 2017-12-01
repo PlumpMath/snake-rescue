@@ -42,20 +42,18 @@ class PlayState extends State {
             name: "ah",
             pos: new Vector(200, 200)
         });
+        Main.running = true;
     }
     
-    var total_time:Float = 0;
-    override function update(delta:Float) {
-        if(huay_chivo==null)return;
-        total_time+=delta/0.25;
-        huay_chivo.frame = Math.floor(total_time);
-        huay_chivo.rotation_z += 20*delta;
+    override function update(dt:Float) {
+        
     }
     
     function createBackground() {
         mapmap = maps.MapGeneration.createYucatecMap();
         
-        for (x in 0...(Math.floor(Math.random()*(50-25+0.99))+25)) {
+        var n = Math.floor(Math.random()*(50-25+0.99))+25;
+        for (x in 0...n) {
             var x;
             var y;
             do {
@@ -73,18 +71,24 @@ class PlayState extends State {
         }
     }
     
+    public function mapreset() {
+        Main.running = false;
+        mapmap.destroy();
+        
+        Main.colliders = [];
+        for (sprite in Main.sprites) {
+            if(!sprite.destroyed) sprite.destroy();
+        }
+        Main.sprites = [];
+        createBackground();
+        
+        Main.player.reset();
+        Main.running = true;
+    }
+    
     override public function onkeydown(event:KeyEvent) {
         if (event.keycode == Key.key_r) {
-            mapmap.destroy();
-            
-            Main.colliders = [];
-            for (sprite in Main.sprites) {
-                sprite.destroy();
-            }
-            Main.sprites = [];
-            createBackground();
-            
-            Main.player.reset();
+            mapreset();
         }
     }
 

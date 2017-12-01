@@ -39,7 +39,9 @@ class Main extends luxe.Game {
     public static var colliders : Array<utils.ParentedPolygon>;
     public static var player : entities.Player;
     var stateMachine : States;
-    var playState : PlayState;
+    public var playState : PlayState;
+    
+    public static var running : Bool = false;
     
     public static var creators : Map<String, OptionalPseudo3DOptions -> Pseudo3D>;
     
